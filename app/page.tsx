@@ -1,103 +1,304 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { BookOpen, Search, Play, Users, Star, ChevronRight, Calendar, Award, Video, FileText } from "lucide-react"
+
+export default function StudentDashboard() {
+  const [searchQuery, setSearchQuery] = useState("")
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background">
+      {/* Header - Coursera Style */}
+      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <h1 className="text-xl font-bold text-blue-600">LearnHub</h1>
+              </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+              <nav className="hidden md:flex items-center gap-6">
+                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
+                  Browse
+                </Button>
+                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
+                  For Business
+                </Button>
+                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
+                  For Universities
+                </Button>
+              </nav>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="relative hidden md:block">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Input
+                  placeholder="What do you want to learn?"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 w-80 border-gray-300"
+                />
+              </div>
+              <Avatar className="w-8 h-8">
+                <AvatarImage src="/student-avatar.png" />
+                <AvatarFallback>AS</AvatarFallback>
+              </Avatar>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </header>
+
+      <div className="container mx-auto px-6 py-8">
+        {/* Welcome Section - Coursera Style */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Welcome back, Alex</h2>
+          <p className="text-gray-600">Continue your learning journey and achieve your goals</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Continue Learning - Coursera Style */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-semibold text-gray-900">Continue Learning</CardTitle>
+                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                    View all courses
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                  <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-900 mb-1">Introduction to AI Basics</h3>
+                    <p className="text-sm text-gray-600 mb-3">
+                      Stanford University • Course 1 of 4 in the AI Specialization
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Week 2 of 4</span>
+                        <span className="text-blue-600 font-medium">45% complete</span>
+                      </div>
+                      <Progress value={45} className="h-2" />
+                    </div>
+                  </div>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Play className="w-4 h-4 mr-2" />
+                    Continue
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recommended Courses - Coursera Style */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-semibold text-gray-900">Recommended for you</CardTitle>
+                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                    View all
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {[
+                    {
+                      title: "Python for Data Science",
+                      university: "University of Michigan",
+                      rating: 4.7,
+                      students: "2.1M",
+                      level: "Beginner",
+                      duration: "6 months",
+                      image: "/python-programming-concept.png",
+                    },
+                    {
+                      title: "Data Visualization with Tableau",
+                      university: "UC Davis",
+                      rating: 4.6,
+                      students: "890K",
+                      level: "Intermediate",
+                      duration: "4 months",
+                      image: "/data-visualization-abstract.png",
+                    },
+                  ].map((course, index) => (
+                    <Card key={index} className="border border-gray-200 hover:shadow-md transition-shadow">
+                      <div className="aspect-video w-full bg-gray-100 rounded-t-lg overflow-hidden">
+                        <img
+                          src={course.image || "/placeholder.svg"}
+                          alt={course.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-gray-900 line-clamp-2">{course.title}</h4>
+                          <p className="text-sm text-gray-600">{course.university}</p>
+                          <div className="flex items-center gap-2 text-sm">
+                            <div className="flex items-center gap-1">
+                              <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                              <span className="font-medium">{course.rating}</span>
+                            </div>
+                            <span className="text-gray-400">•</span>
+                            <span className="text-gray-600">{course.students} students</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Badge variant="secondary" className="text-xs">
+                              {course.level}
+                            </Badge>
+                            <span>{course.duration}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Learning Goals */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-semibold text-gray-900">Your Learning Goals</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    {
+                      goal: "Complete AI Fundamentals Specialization",
+                      progress: 45,
+                      deadline: "Dec 2024",
+                      status: "On track",
+                    },
+                    {
+                      goal: "Earn Python Programming Certificate",
+                      progress: 20,
+                      deadline: "Jan 2025",
+                      status: "Behind",
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className="p-4 border border-gray-200 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium text-gray-900">{item.goal}</h4>
+                        <Badge
+                          variant={item.status === "On track" ? "default" : "destructive"}
+                          className={item.status === "On track" ? "bg-green-100 text-green-800" : ""}
+                        >
+                          {item.status}
+                        </Badge>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600">Target: {item.deadline}</span>
+                          <span className="text-blue-600 font-medium">{item.progress}% complete</span>
+                        </div>
+                        <Progress value={item.progress} className="h-2" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Learning Stats */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-semibold text-gray-900">Your Progress</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">6</div>
+                    <div className="text-sm text-gray-600">Courses</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">12.5</div>
+                    <div className="text-sm text-gray-600">Hours</div>
+                  </div>
+                </div>
+                <div className="pt-4 border-t border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-600">This week</span>
+                    <span className="text-sm font-medium text-gray-900">3.2 hours</span>
+                  </div>
+                  <Progress value={65} className="h-2" />
+                  <p className="text-xs text-gray-500 mt-1">Goal: 5 hours per week</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Upcoming Deadlines */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-blue-600" />
+                  Upcoming Deadlines
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-start gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 text-sm">Quiz: Machine Learning Basics</p>
+                    <p className="text-xs text-gray-600">Due Friday, 10:00 AM</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 text-sm">Assignment: Data Analysis Project</p>
+                    <p className="text-xs text-gray-600">Due Monday, 11:59 PM</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card className="border border-gray-200 shadow-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg font-semibold text-gray-900">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button variant="outline" className="w-full justify-start bg-transparent" size="sm">
+                  <Video className="w-4 h-4 mr-2" />
+                  Browse Courses
+                </Button>
+                <Button variant="outline" className="w-full justify-start bg-transparent" size="sm">
+                  <FileText className="w-4 h-4 mr-2" />
+                  View Certificates
+                </Button>
+                <Button variant="outline" className="w-full justify-start bg-transparent" size="sm">
+                  <Users className="w-4 h-4 mr-2" />
+                  Discussion Forums
+                </Button>
+                <Button variant="outline" className="w-full justify-start bg-transparent" size="sm">
+                  <Award className="w-4 h-4 mr-2" />
+                  Career Services
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
     </div>
-  );
+  )
 }

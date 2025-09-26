@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookOpen, Search, Play, Users, Star, ChevronRight, Calendar, Award, Video, FileText } from "lucide-react"
+import Link from "next/link"
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -97,10 +98,12 @@ export default function StudentDashboard() {
                       <Progress value={45} className="h-2" />
                     </div>
                   </div>
+                  <Link href="/learn" className="ml-auto">
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                     <Play className="w-4 h-4 mr-2" />
                     Continue
                   </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -110,10 +113,12 @@ export default function StudentDashboard() {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold text-gray-900">Recommended for you</CardTitle>
-                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
-                    View all
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </Button>
+                      <Link href="/categories">
+                        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                          View all
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </Link>
                 </div>
               </CardHeader>
               <CardContent>

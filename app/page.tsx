@@ -74,10 +74,12 @@ export default function StudentDashboard() {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold text-gray-900">Continue Learning</CardTitle>
-                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
-                    View all courses
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </Button>
+                  <Link href="/courses">
+                    <Button variant="ghost" size="sm" className="text-blue-600 cursor-pointer hover:text-blue-700">
+                      View all courses
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </Link>
                 </div>
               </CardHeader>
               <CardContent>
@@ -98,8 +100,8 @@ export default function StudentDashboard() {
                       <Progress value={45} className="h-2" />
                     </div>
                   </div>
-                  <Link href="/learn" className="ml-auto">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Link href="/lessons" className="ml-auto">
+                  <Button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white">
                     <Play className="w-4 h-4 mr-2" />
                     Continue
                   </Button>

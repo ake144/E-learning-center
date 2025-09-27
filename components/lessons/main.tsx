@@ -28,21 +28,85 @@ import {
   ThumbsUp,
   ArrowRight,
 } from "lucide-react"
+import Link from "next/link"
 
-export default function LessonsPage() {
+export interface Lesson {
+  id: number
+  title: string
+  duration: string
+  completed?: boolean
+  current?: boolean // Make sure 'current' is always present as optional
+  // The following fields are only present for currentLessonData
+  module?: string
+  overview?: string
+  transcript?: string
+  resources?: string[]
+}
+export interface Module {
+    id: number
+    title: string
+    lessons: Lesson[]
+    }
+
+
+export default function CareerSkillsPage() {
   const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(145) // 2:25
-  const [duration] = useState(420) // 7:00
+  const [currentTime, setCurrentTime] = useState(145)
+  const [duration] = useState(420)
   const [notes, setNotes] = useState("")
+  const [currentView, setCurrentView] = useState("courses") // "courses" or "lesson"
+  const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null)
 
-  const lessons = [
-    { id: 1, title: "What makes a quantity a vector?", duration: "2:45", completed: true },
-    { id: 2, title: "Scalar vs Vector Examples", duration: "3:20", completed: true },
-    { id: 3, title: "Vector Representation", duration: "4:15", completed: true },
-    { id: 4, title: "Vector Addition Basics", duration: "5:30", completed: false, current: true },
-    { id: 5, title: "Vector Subtraction", duration: "4:45", completed: false },
-    { id: 6, title: "Magnitude and Direction", duration: "6:10", completed: false },
+  const modules = [
+    {
+      id: 1,
+      title: "Module 1: Self-Awareness & Career Foundations",
+      lessons: [
+        { id: 1, title: "Identifying strengths, weaknesses, and interests", duration: "5:30", completed: true, current: false }
+      ]
+    },
+    {
+      id: 2,
+      title: "Module 2: Building a Professional Identity",
+      lessons: [
+        { id: 2, title: "Writing an impactful one-page resume", duration: "6:15", completed: true, current: false }
+      ]
+    },
+    {
+      id: 3,
+      title: "Module 3: Communication & Interview Skills",
+      lessons: [
+        { id: 3, title: "Business email etiquette", duration: "4:45", completed: true, current: false }
+      ]
+    },
+    {
+      id: 4,
+      title: "Module 4: Workplace Readiness",
+      lessons: [
+        { id: 4, title: "Teamwork & collaboration", duration: "7:20", completed: false, current: true }
+      ]
+    },
+    {
+      id: 5,
+      title: "Module 5: Career Growth & Future Skills",
+      lessons: [
+        { id: 5, title: "Upskilling with online platforms", duration: "5:10", completed: false, current: false }
+      ]
+    }
   ]
+
+  const currentLessonData = currentLesson ? {
+    id: currentLesson.id,
+    title: currentLesson.title,
+    module: modules.find(m => m.lessons.some(l => l.id === currentLesson.id))?.title || "Career Skills",
+    overview: "Use this micro-lesson to build essential career skills and apply them directly to your professional development.",
+    transcript: "In this lesson, you'll learn practical skills that can be immediately applied to enhance your career trajectory and professional presence.",
+    resources: [
+      "How to master this skill (YouTube)",
+      "Practical templates and examples",
+      "Additional reading materials"
+    ]
+  } : null
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -50,343 +114,92 @@ export default function LessonsPage() {
     return `${mins}:${secs.toString().padStart(2, "0")}`
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600">
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Back to Course
-              </Button>
-              <div className="h-6 w-px bg-gray-200" />
-              <div>
-                <h1 className="text-xl font-semibold text-gray-900">Vectors vs. Scalars</h1>
-                <p className="text-sm text-gray-600">AI Foundations • Week 2 of 4</p>
+  const handleLessonClick = (lesson: Lesson) => {
+    setCurrentLesson(lesson)
+    setCurrentView("lesson")
+  }
+
+  if (currentView === "courses") {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600">
+                  <ChevronLeft className="w-4 h-4 mr-2" />
+                  Back to Dashboard
+                </Button>
+                <div className="h-6 w-px bg-gray-200" />
+                <div>
+                  <h1 className="text-xl font-semibold text-gray-900">Career Skills Modules</h1>
+                  <p className="text-sm text-gray-600">Professional Development • Complete at your own pace</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-                Beginner
-              </Badge>
-              <Badge variant="outline" className="border-gray-300">
-                <Clock className="w-3 h-3 mr-1" />7 min
+              <Badge variant="secondary" className="bg-green-100 text-green-700">
+                Self-Paced
               </Badge>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Video Content */}
-          <div className="lg:col-span-3 space-y-6">
-            <Card className="border border-gray-200 shadow-sm overflow-hidden">
-              <div className="relative bg-black aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <Play className="w-16 h-16 mx-auto mb-4 opacity-80" />
-                    <p className="text-lg font-medium">Vector Addition Basics</p>
-                    <p className="text-sm opacity-70">Understanding how vectors combine</p>
-                  </div>
-                </div>
-
-                {/* Video Controls */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+        <div className="container mx-auto px-6 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {modules.map((module) => (
+              <Card key={module.id} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 text-lg">{module.title}</CardTitle>
+                  <CardDescription>Essential skills for professional growth</CardDescription>
+                </CardHeader>
+                <CardContent>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3 text-white text-sm">
-                      <span>{formatTime(currentTime)}</span>
-                      <div className="flex-1">
-                        <Progress value={(currentTime / duration) * 100} className="h-1 bg-white/20" />
-                      </div>
-                      <span>{formatTime(duration)}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <SkipBack className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-white hover:bg-white/20"
-                          onClick={() => setIsPlaying(!isPlaying)}
-                        >
-                          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <SkipForward className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Volume2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Bookmark className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Maximize className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-gray-100">
-                <TabsTrigger value="overview" className="data-[state=active]:bg-white">
-                  Overview
-                </TabsTrigger>
-                <TabsTrigger value="transcript" className="data-[state=active]:bg-white">
-                  Transcript
-                </TabsTrigger>
-                <TabsTrigger value="resources" className="data-[state=active]:bg-white">
-                  Resources
-                </TabsTrigger>
-                <TabsTrigger value="discussion" className="data-[state=active]:bg-white">
-                  Discussion
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="overview" className="space-y-6">
-                <Card className="border border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-gray-900 flex items-center gap-2">
-                      <Target className="w-5 h-5 text-blue-600" />
-                      Learning Objectives
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                        <span className="text-gray-900">Distinguish between scalar and vector quantities</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                        <span className="text-gray-900">Identify real-world examples of vectors and scalars</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Circle className="w-5 h-5 text-gray-400 mt-0.5" />
-                        <span className="text-gray-900">
-                          Explain the relationship between distance and displacement
-                        </span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                <Card className="border border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-gray-900">Key Concepts</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <h4 className="font-semibold text-gray-900 mb-2">Scalar Quantities:</h4>
-                      <p className="text-sm text-gray-700">
-                        Have magnitude only (e.g., mass: 3 kg, temperature: 20°C, speed: 50 mph)
-                      </p>
-                    </div>
-                    <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                      <h4 className="font-semibold text-gray-900 mb-2">Vector Quantities:</h4>
-                      <p className="text-sm text-gray-700">
-                        Have both magnitude and direction (e.g., velocity: 12 m/s east, force: 10 N upward)
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="transcript">
-                <Card className="border border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-gray-900">Video Transcript</CardTitle>
-                    <CardDescription>Follow along with the complete lesson transcript</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4 max-h-96 overflow-y-auto">
-                      <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs text-blue-600 font-medium">0:00</span>
-                          <Badge variant="secondary" >
-                            Intro
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-gray-900">
-                          Welcome to our lesson on vectors versus scalars. Today we'll learn the fundamental difference
-                          between these two types of quantities in physics and mathematics.
-                        </p>
-                      </div>
-                      <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs text-blue-600 font-medium">1:15</span>
-                          <Badge className="bg-blue-600" >
-                            Current
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-gray-900">
-                          A vector, on the other hand, has both magnitude and direction. This means it tells us not just
-                          how much, but also which way. Examples include velocity, force, and displacement.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="resources">
-                <Card className="border border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-gray-900">Additional Resources</CardTitle>
-                    <CardDescription>Supplementary materials to enhance your learning</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                    {module.lessons.map((lesson) => (
+                      <Link href="" key={lesson.id} onClick={() => handleLessonClick(lesson)}>
+                      <div
+                        key={lesson.id}
+                        className={`p-3 rounded-lg border transition-all cursor-pointer ${
+                          lesson.current
+                            ? "bg-blue-50 border-blue-200"
+                            : lesson.completed
+                              ? "bg-green-50 border-green-200 hover:bg-green-100"
+                              : "hover:bg-gray-50 border-gray-200"
+                        }`}
+                        onClick={() => handleLessonClick(lesson)}
+                      >
                         <div className="flex items-start gap-3">
-                          <FileText className="w-5 h-5 text-blue-600 mt-1" />
+                          {lesson.completed ? (
+                            <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                          ) : lesson.current ? (
+                            <Play className="w-5 h-5 text-blue-600 mt-0.5" />
+                          ) : (
+                            <Circle className="w-5 h-5 text-gray-400 mt-0.5" />
+                          )}
                           <div className="flex-1">
-                            <h4 className="font-medium text-gray-900">Practice Problems</h4>
-                            <p className="text-sm text-gray-600 mb-2">10 problems to test your understanding</p>
-                            <Button size="sm" variant="outline">
-                              <Download className="w-3 h-3 mr-2" />
-                              Download PDF
-                            </Button>
+                            <h4 className={`font-medium text-sm ${lesson.current ? "text-blue-600" : "text-gray-900"}`}>
+                              {lesson.title}
+                            </h4>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Clock className="w-3 h-3 text-gray-500" />
+                              <span className="text-xs text-gray-500">{lesson.duration}</span>
+                              {lesson.completed && (
+                                <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
+                                  Completed
+                                </Badge>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="discussion">
-                <Card className="border border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-gray-900 flex items-center gap-2">
-                      <MessageSquare className="w-5 h-5 text-blue-600" />
-                      Discussion Forum
-                    </CardTitle>
-                    <CardDescription>Ask questions and discuss with fellow learners</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="p-4 border border-gray-200 rounded-lg">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="w-8 h-8">
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium text-gray-900">John Doe</span>
-                            <span className="text-xs text-gray-500">2 hours ago</span>
-                          </div>
-                          <p className="text-sm text-gray-900 mb-2">
-                            Great explanation! I'm still confused about when displacement becomes a vector. Can someone
-                            help clarify?
-                          </p>
-                          <div className="flex items-center gap-4">
-                            <Button size="sm" variant="ghost" className="text-gray-500">
-                              <ThumbsUp className="w-3 h-3 mr-1" />5
-                            </Button>
-                            <Button size="sm" variant="ghost" className="text-blue-600">
-                              Reply
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-4 border border-gray-200 rounded-lg">
-                      <Textarea placeholder="Ask a question or share your thoughts..." className="mb-3" />
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white">Post Comment</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            <Card className="border border-gray-200 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-gray-900 text-lg">Course Progress</CardTitle>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">4 of 6 lessons</span>
-                  <span className="text-lg font-semibold text-blue-600">67%</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Progress value={67} className="h-2 mb-4" />
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="w-4 h-4" />
-                  <span>~15 min remaining</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-gray-200 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-gray-900 text-lg">Course Content</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {lessons.map((lesson) => (
-                  <div
-                    key={lesson.id}
-                    className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                      lesson.current
-                        ? "bg-blue-50 border-blue-200"
-                        : lesson.completed
-                          ? "bg-green-50 border-green-200 hover:bg-green-100"
-                          : "hover:bg-gray-50 border-gray-200"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      {lesson.completed ? (
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                      ) : lesson.current ? (
-                        <Play className="w-5 h-5 text-blue-600 mt-0.5" />
-                      ) : (
-                        <Circle className="w-5 h-5 text-gray-400 mt-0.5" />
-                      )}
-                      <div className="flex-1">
-                        <h4 className={`font-medium text-sm ${lesson.current ? "text-blue-600" : "text-gray-900"}`}>
-                          {lesson.title}
-                        </h4>
-                        <p className="text-xs text-gray-500">{lesson.duration}</p>
-                      </div>
-                    </div>
+                      </Link>
+                    ))}
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card className="border border-gray-200 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-gray-900 text-lg">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  Next Lesson
-                </Button>
-                <Button variant="outline" className="w-full bg-transparent">
-                  <Bookmark className="w-4 h-4 mr-2" />
-                  Save for Later
-                </Button>
-                <Button variant="outline" className="w-full bg-transparent">
-                  <Users className="w-4 h-4 mr-2" />
-                  Study Group
-                </Button>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
+
 }

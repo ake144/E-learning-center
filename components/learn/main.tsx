@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -30,6 +31,7 @@ import {
 
 
 export default function LearnPage() {
+  const router = useRouter()
   const [notes, setNotes] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -66,7 +68,7 @@ export default function LearnPage() {
   const studyGoals = [
     { id: 1, title: "Complete Vector Calculus Module", progress: 75, dueDate: "Jan 20" },
     { id: 2, title: "Python Project Submission", progress: 40, dueDate: "Jan 25" },
-    { id: 3, title: "AI Ethics Essay", progress: 20, dueDate: "Jan 30" },
+    { id: 3, title: "AI Ethics Essay", progress: 100, dueDate: "Jan 30" },
   ]
 
   const recentActivity = [
@@ -160,6 +162,30 @@ export default function LearnPage() {
                           <span className="text-blue-600 font-medium">{goal.progress}%</span>
                         </div>
                         <Progress value={goal.progress} className="h-2" />
+                      </div>
+                      <div className="mt-4 flex justify-end">
+                        {goal.progress === 100 ? (
+                          <Button
+                            variant="secondary"
+                            onClick={() => router.push(`/learn/goal/${goal.id}`)}
+                          >
+                            Completed
+                          </Button>
+                        ) : goal.progress === 0 ? (
+                          <Button
+                            className="bg-green-600 hover:bg-green-700 text-white"
+                            onClick={() => router.push(`/learn/goal/${goal.id}`)}
+                          >
+                            Start
+                          </Button>
+                        ) : (
+                          <Button
+                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                            onClick={() => router.push(`/learn/goal/${goal.id}`)}
+                          >
+                            Continue
+                          </Button>
+                        )}
                       </div>
                     </div>
                   ))}

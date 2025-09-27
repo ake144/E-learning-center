@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,23 +10,34 @@ import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { use } from "react";
 import {
   Play, Pause, SkipForward, SkipBack, Volume2, Maximize, Clock, CheckCircle, Circle, FileText, Download, Bookmark, ChevronLeft,
   Target, MessageSquare, ThumbsUp, ArrowRight,
 } from "lucide-react";
 import { courses } from "@/utils/data/course";
+// import PlyrVideoComponent from "@/components/plyr-video";
+import dynamic from "next/dynamic";
 
-export default function LessonDetailPage({ params }: { params: { courseSlug: string; lessonId: string } }) {
+const PlyrVideoComponent = dynamic(() => import("@/components/videoPlayer/main"), { ssr: false });
+
+export default function LessonDetailPage() {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(145);
   const [duration] = useState(420);
   const [notes, setNotes] = useState("");
+  const params = useParams();
 
-  const course = courses.find((c) => c.slug === params.courseSlug);
+  const { courseSlug, lessonId } = params;
+  console.log("Params:", params);
+
+
+
+  const course = courses.find((c) => c.slug === courseSlug);
   if (!course) return notFound();
 
-  const lessonIdNum = parseInt(params.lessonId, 10);
+  const lessonIdNum = lessonId ? parseInt(lessonId as string, 10) : NaN;
   const lesson = course.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonIdNum);
   if (!lesson) return notFound();
 
@@ -45,7 +56,7 @@ export default function LessonDetailPage({ params }: { params: { courseSlug: str
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600" onClick={() => router.push(`/my-learning/${params.courseSlug}`)}>
+              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600" onClick={() => router.push(`/my-learning/${courseSlug}`)}>
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Back to Modules
               </Button>
@@ -71,51 +82,7 @@ export default function LessonDetailPage({ params }: { params: { courseSlug: str
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             <Card className="border border-gray-200 shadow-sm overflow-hidden">
-              <div className="relative bg-gradient-to-br from-purple-900 to-blue-800 aspect-video">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <Play className="w-16 h-16 mx-auto mb-4 opacity-80" />
-                    <p className="text-lg font-medium">{lesson.title}</p>
-                    <p className="text-sm opacity-70">Practical career development skills</p>
-                  </div>
-                </div>
-                {/* Video Controls */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 text-white text-sm">
-                      <span>{formatTime(currentTime)}</span>
-                      <div className="flex-1">
-                        <Progress value={(currentTime / duration) * 100} className="h-1 bg-white/20" />
-                      </div>
-                      <span>{formatTime(duration)}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <SkipBack className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20" onClick={() => setIsPlaying(!isPlaying)}>
-                          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <SkipForward className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Volume2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Bookmark className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" className="text-white hover:bg-white/20">
-                          <Maximize className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <PlyrVideoComponent videoId={lesson.videoId} />
             </Card>
 
             <Tabs defaultValue="overview" className="w-full">
@@ -302,7 +269,7 @@ export default function LessonDetailPage({ params }: { params: { courseSlug: str
                               ? "bg-green-50 border-green-200 hover:bg-green-100"
                               : "hover:bg-gray-50 border-gray-200"
                         }`}
-                        onClick={() => router.push(`/my-learning/${params.courseSlug}/${les.id}`)}
+                        onClick={() => router.replace(`/my-learning/${courseSlug}/${les.id}`)}
                       >
                         <div className="flex items-start gap-3">
                           {les.completed ? (

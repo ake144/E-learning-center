@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,10 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle, Clock, ChevronLeft } from "lucide-react";
 import { courses } from "@/utils/data/course";
+import {use} from 'react';
 
-export default function CourseModulesPage({ params }: { params: { courseSlug: string } }) {
+export default function CourseModulesPage() {
   const router = useRouter();
-  const course = courses.find((c) => c.slug === params.courseSlug);
+  const params = useParams();
+  const { courseSlug } = params;
+
+  const course = courses.find((c) => c.slug === courseSlug);
   if (!course) return notFound();
 
   return (
@@ -54,7 +58,7 @@ export default function CourseModulesPage({ params }: { params: { courseSlug: st
                       className={`p-3 rounded-lg border transition-all cursor-pointer ${
                         lesson.completed ? "bg-green-50 border-green-200 hover:bg-green-100" : "hover:bg-gray-50 border-gray-200"
                       }`}
-                      onClick={() => router.push(`/my-learning/${params.courseSlug}/${lesson.id}`)}
+                      onClick={() => router.push(`/my-learning/${courseSlug}/${lesson.id}`)}
                     >
                       <div className="flex items-start gap-3">
                         {lesson.completed ? (

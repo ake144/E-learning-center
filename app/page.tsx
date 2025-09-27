@@ -16,48 +16,7 @@ export default function StudentDashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header - Coursera Style */}
-      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-white" />
-                </div>
-                <h1 className="text-xl font-bold text-blue-600">LearnHub</h1>
-              </div>
-
-              <nav className="hidden md:flex items-center gap-6">
-                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                  Browse
-                </Button>
-                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                  For Business
-                </Button>
-                <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                  For Universities
-                </Button>
-              </nav>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="relative hidden md:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  placeholder="What do you want to learn?"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-80 border-gray-300"
-                />
-              </div>
-              <Avatar className="w-8 h-8">
-                <AvatarImage src="/student-avatar.png" />
-                <AvatarFallback>AS</AvatarFallback>
-              </Avatar>
-            </div>
-          </div>
-        </div>
-      </header>
+      
 
       <div className="container mx-auto px-6 py-8">
         {/* Welcome Section - Coursera Style */}

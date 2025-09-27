@@ -6,6 +6,7 @@ export interface Lesson {
   transcript: string;
   resources: string[];
   completed: boolean;
+  videoId: string; // Unique identifier for the video
 }
 
 export interface Module {
@@ -39,6 +40,7 @@ export const courses: Course[] = [
             id: 1,
             title: "Identifying strengths, weaknesses, and interests",
             duration: "5:30",
+            videoId: "JwNI1F21eK8",
             overview: "Learn to identify your strengths, weaknesses, and interests for career growth.",
             transcript: "This lesson covers self-assessment techniques to help you understand your professional profile.",
             resources: ["Self-assessment worksheet", "Career interest survey", "Recommended reading"],
@@ -55,6 +57,7 @@ export const courses: Course[] = [
             id: 2,
             title: "Writing an impactful one-page resume",
             duration: "6:15",
+            videoId: "oroNbJYNkEc",
             overview: "Master the art of resume writing for professional success.",
             transcript: "This lesson guides you through creating a concise and effective resume.",
             resources: ["Resume template", "Sample resumes", "Resume writing tips"],
@@ -71,6 +74,7 @@ export const courses: Course[] = [
             id: 3,
             title: "Business email etiquette",
             duration: "4:45",
+            videoId: "ppf9j8x0LA8",
             overview: "Understand the essentials of professional email communication.",
             transcript: "Learn how to write clear, polite, and effective business emails.",
             resources: ["Email etiquette guide", "Sample business emails", "Checklist for professional emails"],
@@ -87,6 +91,7 @@ export const courses: Course[] = [
             id: 4,
             title: "Teamwork & collaboration",
             duration: "7:20",
+            videoId: "QxOBgyitHek",
             overview: "Develop skills for effective teamwork and collaboration.",
             transcript: "Explore strategies for working well in teams and collaborating with colleagues.",
             resources: ["Teamwork exercises", "Collaboration tools overview", "Case studies"],
@@ -103,6 +108,7 @@ export const courses: Course[] = [
             id: 5,
             title: "Upskilling with online platforms",
             duration: "5:10",
+            videoId: "KmphskDulug",
             overview: "Discover how to upskill using online learning platforms.",
             transcript: "This lesson introduces top platforms and strategies for continuous learning.",
             resources: ["List of online platforms", "Upskilling roadmap", "Success stories"],

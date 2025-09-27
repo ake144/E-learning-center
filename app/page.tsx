@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -9,17 +10,65 @@ import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookOpen, Search, Play, Users, Star, ChevronRight, Calendar, Award, Video, FileText } from "lucide-react"
 import Link from "next/link"
+import { Course, courses } from "@/utils/data/course"
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
+  const router = useRouter()
+
+  // Mock recommended courses (can be expanded or fetched)
+  const recommendedCourses = [
+    {
+      title: "Python for Data Science",
+      university: "University of Michigan",
+      rating: 4.7,
+      students: "2.1M",
+      level: "Beginner",
+      duration: "6 months",
+      image: "/placeholder.svg?height=200&width=400&text=Python+Data+Science",
+    },
+    {
+      title: "Data Visualization with Tableau",
+      university: "UC Davis",
+      rating: 4.6,
+      students: "890K",
+      level: "Intermediate",
+      duration: "4 months",
+      image: "/placeholder.svg?height=200&width=400&text=Tableau+Visualization",
+    },
+  ]
+
+  // Mock learning goals
+  const learningGoals = [
+    {
+      goal: "Complete AI Fundamentals Specialization",
+      progress: 45,
+      deadline: "Dec 2024",
+      status: "On track",
+    },
+    {
+      goal: "Earn Python Programming Certificate",
+      progress: 20,
+      deadline: "Jan 2025",
+      status: "Behind",
+    },
+  ]
+
+  const getButtonProps = (course: Course) => {
+    if (course.progress === 100) {
+      return { text: "Completed", variant: "secondary" as const };
+    } else if (course.progress > 0) {
+      return { text: "Continue", variant: "default" as const };
+    }
+    return { text: "Start", variant: "default" as const };
+  }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header - Coursera Style */}
-      
+    <div className="min-h-screen bg-[#F5FBFE] pt-20">
+   
 
       <div className="container mx-auto px-6 py-8">
-        {/* Welcome Section - Coursera Style */}
+        {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">Welcome back, Alex</h2>
           <p className="text-gray-600">Continue your learning journey and achieve your goals</p>
@@ -28,12 +77,12 @@ export default function StudentDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Continue Learning - Coursera Style */}
+            {/* Continue Learning */}
             <Card className="border border-gray-200 shadow-sm">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold text-gray-900">Continue Learning</CardTitle>
-                  <Link href="/courses">
+                  <Link href="/my-learning">
                     <Button variant="ghost" size="sm" className="text-blue-600 cursor-pointer hover:text-blue-700">
                       View all courses
                       <ChevronRight className="w-4 h-4 ml-1" />
@@ -41,73 +90,62 @@ export default function StudentDashboard() {
                   </Link>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 mb-1">Introduction to AI Basics</h3>
-                    <p className="text-sm text-gray-600 mb-3">
-                      Stanford University • Course 1 of 4 in the AI Specialization
-                    </p>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">Week 2 of 4</span>
-                        <span className="text-blue-600 font-medium">45% complete</span>
+              <CardContent className="space-y-4">
+                {courses.map((course) => {
+                  const { text, variant } = getButtonProps(course)
+                  return (
+                    <div
+                      key={course.slug}
+                      className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+                    >
+                      <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <BookOpen className="w-8 h-8 text-blue-600" />
                       </div>
-                      <Progress value={45} className="h-2" />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 mb-1">{course.title}</h3>
+                        <p className="text-sm text-gray-600 mb-3">{course.description}</p>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Progress</span>
+                            <span className="text-blue-600 font-medium">{course.progress}% complete</span>
+                          </div>
+                          <Progress value={course.progress} className="h-2" />
+                        </div>
+                      </div>
+                      <Button
+                        className="ml-auto cursor-pointer"
+                        variant={variant}
+                        onClick={() => router.push(`/my-learning/${course.slug}`)}
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        {text}
+                      </Button>
                     </div>
-                  </div>
-                  <Link href="/lessons" className="ml-auto">
-                  <Button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white">
-                    <Play className="w-4 h-4 mr-2" />
-                    Continue
-                  </Button>
-                  </Link>
-                </div>
+                  )
+                })}
               </CardContent>
             </Card>
 
-            {/* Recommended Courses - Coursera Style */}
+            {/* Recommended Courses */}
             <Card className="border border-gray-200 shadow-sm">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold text-gray-900">Recommended for you</CardTitle>
-                      <Link href="/categories">
-                        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
-                          View all
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </Link>
+                  <Link href="/courses">
+                    <Button variant="ghost" size="sm" className="text-blue-600 cursor-pointer hover:text-blue-700">
+                      View all
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </Link>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {[
-                    {
-                      title: "Python for Data Science",
-                      university: "University of Michigan",
-                      rating: 4.7,
-                      students: "2.1M",
-                      level: "Beginner",
-                      duration: "6 months",
-                      image: "/python-programming-concept.png",
-                    },
-                    {
-                      title: "Data Visualization with Tableau",
-                      university: "UC Davis",
-                      rating: 4.6,
-                      students: "890K",
-                      level: "Intermediate",
-                      duration: "4 months",
-                      image: "/data-visualization-abstract.png",
-                    },
-                  ].map((course, index) => (
+                  {recommendedCourses.map((course, index) => (
                     <Card key={index} className="border border-gray-200 hover:shadow-md transition-shadow">
                       <div className="aspect-video w-full bg-gray-100 rounded-t-lg overflow-hidden">
                         <img
-                          src={course.image || "/placeholder.svg"}
+                          src={course.image}
                           alt={course.title}
                           className="w-full h-full object-cover"
                         />
@@ -145,20 +183,7 @@ export default function StudentDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {[
-                    {
-                      goal: "Complete AI Fundamentals Specialization",
-                      progress: 45,
-                      deadline: "Dec 2024",
-                      status: "On track",
-                    },
-                    {
-                      goal: "Earn Python Programming Certificate",
-                      progress: 20,
-                      deadline: "Jan 2025",
-                      status: "Behind",
-                    },
-                  ].map((item, index) => (
+                  {learningGoals.map((item, index) => (
                     <div key={index} className="p-4 border border-gray-200 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-medium text-gray-900">{item.goal}</h4>

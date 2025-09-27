@@ -157,7 +157,7 @@ export default function CoursesCatalogPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#F5FBFE]">
+    <div className="min-h-screen pt-22 bg-[#F5FBFE]">
       <Navigation />
 
       <div className="container mx-auto px-6 py-8">

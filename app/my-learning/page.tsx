@@ -34,7 +34,7 @@ export default function MyLearningPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
+    
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -51,7 +51,7 @@ export default function MyLearningPage() {
             <Badge variant="secondary" className="bg-green-100 text-green-700">Enrolled: {courses.length}</Badge>
           </div>
         </div>
-      </header>
+    
 
       <div className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

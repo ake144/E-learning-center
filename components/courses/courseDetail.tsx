@@ -34,6 +34,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
     id: 1,
     title: "Machine Learning Specialization",
     instructor: "Andrew Ng",
+    slug: "machine-learning-specialization",
     university: "Stanford University",
     category: "Data Science",
     level: "Intermediate",
@@ -153,7 +154,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5FBFE]">
+    <div className="min-h-screen pt-20 bg-[#F5FBFE]">
       {/* <Navigation /> */}
 
       <div className="container mx-auto px-6 py-8">
@@ -389,7 +390,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
 
                 {isEnrolled ? (
                   <div className="space-y-3">
-                    <Link href={`/lessons/${course.id}`}>
+                    <Link href={`/my-learning/${course.slug}`}>
                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                         <Play className="w-4 h-4 mr-2" />
                         Continue Learning

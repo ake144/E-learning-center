@@ -114,9 +114,8 @@ export default function MyLearningPage() {
   const completedCourses = courses.filter(c => c.progress === 100).length
 
   return (
-    <div className="min-h-screen bg-background">
-      
-      <div className="container mx-auto px-6 py-8 mt-22 p">
+    <div className="min-h-screen bg-[#F5FBFE]">
+      <div className="container mx-auto px-6 py-8 mt-22">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">

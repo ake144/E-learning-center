@@ -10,7 +10,7 @@ const CourseDetailPage = () => {
 
 
 
-    return <div><CourseDetail  id={id} /></div>
+    return <div><CourseDetail  /></div>
 }
 
 export default CourseDetailPage;

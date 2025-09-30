@@ -20,10 +20,9 @@ export default function CourseModulesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+    
+      <div className="container mx-auto px-6 py-8 mt-22">
+        <div className="flex items-center gap-4 pb-6 border-b mb-6">
               <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600" onClick={() => router.push("/my-learning")}>
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Back to My Learning
@@ -34,12 +33,6 @@ export default function CourseModulesPage() {
                 <p className="text-sm text-gray-600">{course.description}</p>
               </div>
             </div>
-            <Badge variant="secondary" className="bg-green-100 text-green-700">Self-Paced</Badge>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {course.modules.map((module) => (
             <Card key={module.id} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">

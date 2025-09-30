@@ -52,9 +52,9 @@ export default function LessonDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-white sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+    
+      <div className="container mx-auto px-6 py-8 mt-22">
+        <div className="flex items-center justify-between  pb-5">
             <div className="flex items-center gap-4">
               <Button variant="ghost" size="sm" className="text-gray-600 hover:text-blue-600" onClick={() => router.push(`/my-learning/${courseSlug}`)}>
                 <ChevronLeft className="w-4 h-4 mr-2" />
@@ -74,10 +74,6 @@ export default function LessonDetailPage() {
               </Badge>
             </div>
           </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">

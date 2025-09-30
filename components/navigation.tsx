@@ -18,12 +18,12 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/courses", label: "Browse" },
     { href: "/my-learning", label: "My Learning" },
-    { href: "/business", label: "For Business" },
-    { href: "/universities", label: "For Universities" },
+    // { href: "/business", label: "For Business" },
+    // { href: "/universities", label: "For Universities" },
   ]
 
   return (
-    <header className="border-b bg-white fixed w-full top-0 z-0 shadow-sm">
+    <header className="border-b bg-white fixed w-full top-0 z-50 shadow-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">

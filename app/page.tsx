@@ -25,7 +25,7 @@ export default function StudentDashboard() {
       students: "2.1M",
       level: "Beginner",
       duration: "6 months",
-      image: "/placeholder.svg?height=200&width=400&text=Python+Data+Science",
+      image: "https://images.unsplash.com/photo-1649180556628-9ba704115795?q=80&w=1162&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       title: "Data Visualization with Tableau",
@@ -34,7 +34,7 @@ export default function StudentDashboard() {
       students: "890K",
       level: "Intermediate",
       duration: "4 months",
-      image: "/placeholder.svg?height=200&width=400&text=Tableau+Visualization",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGF0YSUyMHZpc3VhbGl6YXRpb258ZW58MHx8MHx8fDI%3D",
     },
   ]
 
@@ -84,7 +84,7 @@ export default function StudentDashboard() {
                   <CardTitle className="text-lg font-semibold text-gray-900">Continue Learning</CardTitle>
                   <Link href="/my-learning">
                     <Button variant="ghost" size="sm" className="text-blue-600 cursor-pointer hover:text-blue-700">
-                      View all courses
+                      View all enrolled courses
                       <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </Link>

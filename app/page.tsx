@@ -107,7 +107,7 @@ export default function StudentDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Alex</h2>
-          <p className="text-gray-600 text-lg">Pick up where you left off or explore something new.</p>
+          <p className="text-gray-800 text-sm">Pick up where you left off or explore something new.</p>
         </div>
 
         {/* Continue Learning */}
@@ -138,7 +138,7 @@ export default function StudentDashboard() {
                     <Progress value={course.progress} className="h-1 mb-2" />
                     <div className="flex justify-between items-center text-sm text-gray-600">
                       <span>{course.progress}% complete</span>
-                      <Button variant={variant} size="sm" onClick={() => router.push(`/my-learning/${course.slug}`)}>
+                      <Button variant={variant} size="sm" className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white" onClick={() => router.push(`/my-learning/${course.slug}`)}>
                         {text}
                       </Button>
                     </div>

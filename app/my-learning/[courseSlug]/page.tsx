@@ -9,13 +9,16 @@ import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle, Clock, ChevronLeft } from "lucide-react";
 import { courses } from "@/utils/data/course";
 import {use} from 'react';
+import { useProgressStore } from "@/store/quiz";
 
 export default function CourseModulesPage() {
   const router = useRouter();
   const params = useParams();
   const { courseSlug } = params;
 
-  const course = courses.find((c) => c.slug === courseSlug);
+  
+  // const course = courses.find((c) => c.slug === courseSlug);
+  const course = useProgressStore((state) => state.courses.find((c) => c.slug === courseSlug));
   if (!course) return notFound();
 
   return (

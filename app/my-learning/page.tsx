@@ -31,6 +31,7 @@ import {
   Play,
 } from "lucide-react"
 import { courses } from "@/utils/data/course"
+import { LearningProgress } from "@/components/my-learning/progress"
 
 export default function MyLearningPage() {
   const router = useRouter()
@@ -141,6 +142,8 @@ export default function MyLearningPage() {
                 <CardDescription>Track your enrolled courses and achievements</CardDescription>
               </CardHeader>
               <CardContent>
+
+                <LearningProgress />
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="text-center p-4 bg-blue-50 rounded-lg">

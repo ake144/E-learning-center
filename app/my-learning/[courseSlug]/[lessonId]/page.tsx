@@ -371,20 +371,20 @@ export default function LessonDetailPage() {
                 <CardTitle className="text-gray-900 text-lg">Quiz Score</CardTitle>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">
-                    {course.modules.map((m)=>{
-                      const quizLessons = m.lessons.filter((l)=>l.hasQuiz);
-                      const totalScore= quizLessons.reduce((sum, l) => sum + (l.quizScore || 0), 0);
+                    {course.modules.filter((m)=>(m.lessons.some((l)=>l.hasQuiz))).map((m) => {
+                      const quizLessons = m.lessons.filter((l) => l.hasQuiz);
+                      const totalScore = quizLessons.reduce((sum, l) => sum + (l.quizScore || 0), 0);
                       const numberOfQuizzes = quizLessons.length;
                       const avgScore = numberOfQuizzes > 0 ? Math.round(totalScore / numberOfQuizzes) : 0;
-                       return (
-                          <div key={m.id} className="mb-4">
-                            <h3 className="text-md font-semibold">{m.title}</h3>
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm text-gray-600">Quizzes: {numberOfQuizzes}</span>
-                              <span className="text-lg font-semibold text-blue-600">{avgScore}%</span>
-                            </div>
+                      return (
+                        <div key={m.id} className="mb-4">
+                          <h3 className="text-md font-semibold">{m.title}</h3>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Quizzes: {numberOfQuizzes}</span>
+                            <span className="text-lg font-semibold text-blue-600">{avgScore}%</span>
                           </div>
-                        );
+                        </div>
+                      );
                     })}
                   </span>
                 </div>

@@ -19,7 +19,7 @@ export function Navigation() {
     { href: "/courses", label: "Browse" },
     { href: "/my-learning", label: "My Learning" },
     { href: "/library", label: "Library" },
-    // { href: "/universities", label: "For Universities" },
+    { href: "/exams", label: "Exams" },
   ]
 
   return (

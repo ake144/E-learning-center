@@ -351,7 +351,7 @@ export default function LearnPage() {
                 </div>
                 <Separator />
                 <div className="text-center">
-                  <p className="text-sm text-gray-600 mb-2">This Week's Focus</p>
+                  <p className="text-sm text-gray-600 mb-2">This Week&apos;s Focus</p>
                   <Badge className="bg-blue-100 text-blue-700">Vector Mathematics</Badge>
                 </div>
               </CardContent>

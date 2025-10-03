@@ -4,7 +4,13 @@ import React, { useEffect } from 'react';
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
 
-const PlyrVideoComponent = ({ videoId }: { videoId: string }) => {
+interface PlyrVideoComponentProps {
+  videoId: string;
+  onProgress?: (progress: number) => void; // progress: 0-1 (fraction)
+  onEnded?: () => void;
+}
+
+const PlyrVideoComponent = ({ videoId, onProgress, onEnded }: PlyrVideoComponentProps) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const player = new Plyr('#player', {
@@ -14,6 +20,21 @@ const PlyrVideoComponent = ({ videoId }: { videoId: string }) => {
         settings: [],
         fullscreen: { enabled: true, fallback: true,  },
       });
+
+      // Attach event listeners for progress and ended
+      const handleProgress = (event: any) => {
+        if (player.duration > 0) {
+          const progress = player.currentTime / player.duration;
+          onProgress?.(progress);
+        }
+      };
+
+      const handleEnded = () => {
+        onEnded?.();
+      };
+
+      player.on('progress', handleProgress);
+      player.on('ended', handleEnded);
 
       const hideYouTubeButtons = () => {
         const style = document.createElement('style');
@@ -47,6 +68,9 @@ const PlyrVideoComponent = ({ videoId }: { videoId: string }) => {
       hideYouTubeButtons();
 
       return () => {
+        // Clean up event listeners
+        player.off('progress', handleProgress);
+        player.off('ended', handleEnded);
         player.destroy();
         const style = document.querySelector('style');
         if (style) {
@@ -54,7 +78,7 @@ const PlyrVideoComponent = ({ videoId }: { videoId: string }) => {
         }
       };
     }
-  }, [videoId]);
+  }, [videoId, onProgress, onEnded]);
 
   return (
     <div className="plyr__video-embed" style={{ width: '1200px', height: '600px', position: 'relative' }} id="player">

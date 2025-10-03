@@ -115,7 +115,7 @@ export default function StudentDashboard() {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-semibold text-gray-900">Continue learning</h3>
             <Link href="/my-learning">
-              <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
+              <Button variant="ghost" className="text-blue-600 cursor-pointer hover:text-blue-700">
                 View all <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </Link>
@@ -188,9 +188,17 @@ export default function StudentDashboard() {
             ))}
           </div>
         </section>
+        {/* <div className="flex items-center justify-between mb-4">
+          
+          <Link href="/courses">
+            <Button variant="ghost" className="text-blue-600 hover:text-blue-700">
+             Load more 
+            </Button>
+          </Link>
+        </div> */}
 
         {/* Browse by Category */}
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h3 className="text-2xl font-semibold text-gray-900 mb-4">Browse by category</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((cat, index) => (
@@ -200,7 +208,7 @@ export default function StudentDashboard() {
               </Button>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Upcoming Deadlines */}
         <section>

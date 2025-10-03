@@ -18,6 +18,7 @@ import {
 import { courses } from "@/utils/data/course";
 // import PlyrVideoComponent from "@/components/plyr-video";
 import dynamic from "next/dynamic";
+import { useProgressStore } from "@/store/quiz";
 
 const PlyrVideoComponent = dynamic(() => import("@/components/videoPlayer/main"), { ssr: false });
 
@@ -29,26 +30,76 @@ export default function LessonDetailPage() {
   const [notes, setNotes] = useState("");
   const params = useParams();
 
+  const {submitQuiz, updateVideoProgress} = useProgressStore();
+
   const { courseSlug, lessonId } = params;
   console.log("Params:", params);
 
+  if (typeof courseSlug !== "string") return notFound();
 
-
-  const course = courses.find((c) => c.slug === courseSlug);
+  const course = useProgressStore((state) => state.courses.find((c) => c.slug === courseSlug));
   if (!course) return notFound();
 
   const lessonIdNum = lessonId ? parseInt(lessonId as string, 10) : NaN;
   const lesson = course.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonIdNum);
   if (!lesson) return notFound();
 
+
   const module = course.modules.find((m) => m.lessons.some((l) => l.id === lesson.id));
   const moduleIndex = course.modules.findIndex((m) => m.id === module?.id) + 1;
+
+  const { videoProgress, quizAnswers, quizScore, quizCompleted, hasQuiz } = lesson || {};
+  const videoCompleted = videoProgress ? videoProgress >= 80 || lesson?.completed || false : false;
+  const showQuiz = videoCompleted && hasQuiz && !quizCompleted; 
+
+
+  const handleReTest=()=>{
+    useProgressStore.setState((state) => {
+      const course = state.courses.find((c) => c.slug === courseSlug);
+      if (!course) return state;
+      
+      const targetLesson = course.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonIdNum);
+      if (!targetLesson) return state;
+      targetLesson.quizCompleted = false;
+      targetLesson.quizScore = 0;
+      targetLesson.quizAnswers = {};
+      return { courses: [...state.courses] }; 
+    });
+  }
+
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
+
+
+  const handleVideoProgress = (progress:number) => { // progress 0-1
+    updateVideoProgress(courseSlug as string, lessonIdNum, progress);
+    // Optional: Backend sync
+    // if (progress >= 0.8) {
+    //   fetch('/api/progress', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ courseSlug, lessonId: lessonIdNum, type: 'video', completed: true }),
+    //   }).catch(console.error);
+    // }
+  };
+  const handleVideoEnded = () => handleVideoProgress(1);
+
+  const handleSubmitQuiz = (answers: Record<string, string>) => {
+    console.log("Submitting quiz answers:", answers);
+
+    submitQuiz(courseSlug as string, lessonIdNum, answers);
+    // Optional: Backend sync
+    // fetch('/api/progress', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ courseSlug, lessonId: lessonIdNum, type: 'quiz', answers }),
+    // }).catch(console.error);
+  }
+  
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,15 +129,24 @@ export default function LessonDetailPage() {
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             <Card className="border border-gray-200 shadow-sm overflow-hidden">
-              <PlyrVideoComponent videoId={lesson.videoId} />
+              <PlyrVideoComponent videoId={lesson.videoId}  onProgress={handleVideoProgress} onEnded={handleVideoEnded} />
+
+              <div className="p-4 bg-gray-50">
+                 <Progress value={videoProgress || 0} className="h-2 mb-2" />
+                 <p className="text-sm text-gray-600 mt-1">
+                   {videoCompleted ?  'video completed' : `${videoProgress}% watched`}
+                 </p>
+              </div>
             </Card>
 
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="grid w-full grid-cols-4 bg-gray-100">
                 <TabsTrigger value="overview" className="data-[state=active]:bg-white">Overview</TabsTrigger>
-                <TabsTrigger value="transcript" className="data-[state=active]:bg-white">Transcript</TabsTrigger>
+                {  hasQuiz &&  <TabsTrigger value="quiz">Quiz ({lesson?.quiz?.length} questions)</TabsTrigger>}
+                {/* <TabsTrigger value="transcript" className="data-[state=active]:bg-white">Transcript</TabsTrigger> */}
                 <TabsTrigger value="resources" className="data-[state=active]:bg-white">Resources</TabsTrigger>
                 <TabsTrigger value="discussion" className="data-[state=active]:bg-white">Discussion</TabsTrigger>
+                
               </TabsList>
 
               <TabsContent value="overview" className="space-y-6">
@@ -115,6 +175,7 @@ export default function LessonDetailPage() {
                   </CardContent>
                 </Card>
 
+
                 <Card className="border border-gray-200 shadow-sm">
                   <CardHeader>
                     <CardTitle className="text-gray-900">Key Outcomes</CardTitle>
@@ -130,6 +191,81 @@ export default function LessonDetailPage() {
                     </div>
                   </CardContent>
                 </Card>
+              </TabsContent>
+
+              <TabsContent value="quiz" className="space-y-6">
+                {quizCompleted ? (
+                  <Card className="border border-gray-200 shadow-sm">
+                    <CardHeader>
+                      <CardTitle>Quiz Complete!</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <Progress value={quizScore} className="mx-auto w-1/2 h-4 mb-4" />
+                      <p className="text-2xl font-bold text-green-600">{quizScore}%</p>
+                      <p className="text-gray-600 mt-2">Excellent work! Progress updated.</p>
+                      <Button onClick={handleReTest} className="mt-4 bg-blue-600 hover:bg-blue-700 text-white">
+                        Retake Quiz
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : showQuiz ? (
+                  <Card className="border border-gray-200 shadow-sm">
+                    <CardHeader>
+                      <CardTitle>Module Quiz</CardTitle>
+                      <CardDescription>Answer to test your knowledge.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {lesson?.quiz?.map((q) => (
+                        <div key={q.id} className="p-4 border rounded-lg">
+                          <h4 className="font-medium mb-2">{q.question}</h4>
+                          <div className="space-y-2">
+                            {q.options.map((opt) => (
+                              <label key={opt} className="flex items-center p-2 hover:bg-gray-50 rounded">
+                                <input
+                                  type="radio"
+                                  name={`q${q.id}`}
+                                  value={opt}
+                                  checked={(quizAnswers?.[q.id] ?? "") === opt}
+                                  onChange={(e) => {
+                                    const newAnswers = { ...quizAnswers, [q.id]: e.target.value };
+                                    useProgressStore.setState((state) => {
+                                      const course = state.courses.find((c) => c.slug === courseSlug);
+                                      if (!course) return state;
+                                      const targetLesson = course.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonIdNum);
+                                      if (!targetLesson) return state;
+                                      targetLesson.quizAnswers = newAnswers;
+                                      return { courses: [...state.courses] };
+                                    }
+                                    );
+                                    // Live update store for preview
+                                    // submitQuiz(courseSlug, lessonIdNum, newAnswers);
+                                  }}
+                                  className="mr-2"
+                                />
+                                {opt}
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                      <Button onClick={() => handleSubmitQuiz(quizAnswers ?? {})} className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
+                        {/* {
+                          (Object.keys(lesson.quiz || {}).length === Object.keys(quizAnswers || {}).length) ? "Submit & Score" : "Please answer all questions"
+                        } */}
+                        submit & score
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card>
+                    <CardContent className="text-center py-8">
+                      <p className="text-gray-600">Complete the video to unlock the quiz.</p>
+                      {!videoCompleted && (
+                        <Progress value={videoProgress} className="mx-auto w-1/2 mt-4 h-2" />
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
               </TabsContent>
 
               <TabsContent value="transcript">
@@ -232,12 +368,35 @@ export default function LessonDetailPage() {
           <div className="space-y-6">
             <Card className="border border-gray-200 shadow-sm">
               <CardHeader>
+                <CardTitle className="text-gray-900 text-lg">Quiz Score</CardTitle>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">
+                    {course.modules.map((m)=>{
+                      const quizLessons = m.lessons.filter((l)=>l.hasQuiz);
+                      const totalScore= quizLessons.reduce((sum, l) => sum + (l.quizScore || 0), 0);
+                      const numberOfQuizzes = quizLessons.length;
+                      const avgScore = numberOfQuizzes > 0 ? Math.round(totalScore / numberOfQuizzes) : 0;
+                       return (
+                          <div key={m.id} className="mb-4">
+                            <h3 className="text-md font-semibold">{m.title}</h3>
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-600">Quizzes: {numberOfQuizzes}</span>
+                              <span className="text-lg font-semibold text-blue-600">{avgScore}%</span>
+                            </div>
+                          </div>
+                        );
+                    })}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardHeader>
                 <CardTitle className="text-gray-900 text-lg">Course Progress</CardTitle>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">{course.modules.filter((m) => m.progress === 100).length} of {course.modules.length} modules</span>
                   <span className="text-lg font-semibold text-blue-600">{course.progress}%</span>
                 </div>
               </CardHeader>
+
               <CardContent>
                 <Progress value={course.progress} className="h-2 mb-4" />
                 <div className="flex items-center gap-2 text-sm text-gray-600">

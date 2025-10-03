@@ -11,10 +11,14 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { BookOpen, Search, Play, Star, ChevronRight, Calendar, Bell, LayoutGrid } from "lucide-react"
 import Link from "next/link"
 import { Course, courses } from "@/utils/data/course"
+import { useProgressStore } from "@/store/quiz"
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
+  const CourseStore = useProgressStore((state)=>state.courses.find((c)=>c.slug =="career-skills"))
+
+  
 
   // Expanded recommended courses with different categories
   const recommendedCourses = [
@@ -121,24 +125,25 @@ export default function StudentDashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => {
-              const { text, variant } = getButtonProps(course);
+            {CourseStore && [CourseStore].map((courses) => {
+              const { text, variant } = getButtonProps(courses );
               return (
-                <Card key={course.slug} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                <Card key={courses.slug} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                   <div className="aspect-[16/9] bg-gray-100">
                     <img
                       src={`http://images.unsplash.com/photo-1758691736664-0b83e4f1215e?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
-                      alt={course.title}
+                      alt={courses.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <CardContent className="p-4">
-                    <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">{course.title}</h4>
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-1">{course.description}</p>
-                    <Progress value={course.progress} className="h-1 mb-2" />
+                    <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">{courses.title}</h4>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-1">{courses.description}</p>
+                    <Progress value={courses.progress} className="h-1 mb-2" />
                     <div className="flex justify-between items-center text-sm text-gray-600">
-                      <span>{course.progress}% complete</span>
-                      <Button variant={variant} size="sm" className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white" onClick={() => router.push(`/my-learning/${course.slug}`)}>
+                        <span className="text-sm text-gray-600">{courses.modules.filter((m) => m.progress === 100).length} of {courses.modules.length} modules</span>
+                         <span className="text-lg font-semibold text-blue-600">{courses.progress}%</span>
+                      <Button variant={variant} size="sm" className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white" onClick={() => router.push(`/my-learning/${courses.slug}`)}>
                         {text}
                       </Button>
                     </div>

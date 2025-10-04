@@ -22,7 +22,7 @@ const booksData: Record<string, any> = {
     longDescription:
       "Some books on algorithms are rigorous but incomplete; others cover masses of material but lack rigor. Introduction to Algorithms uniquely combines rigor and comprehensiveness. The book covers a broad range of algorithms in depth, yet makes their design and analysis accessible to all levels of readers. Each chapter is relatively self-contained and can be used as a unit of study. The algorithms are described in English and in a pseudocode designed to be readable by anyone who has done a little programming.",
     price: "Free",
-    image: "/algorithms-book-cover.png",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
     pages: 1312,
     language: "English",
     format: "PDF",
@@ -43,7 +43,7 @@ const booksData: Record<string, any> = {
     longDescription:
       "Looking for complete instructions on manipulating, processing, cleaning, and crunching structured data in Python? This hands-on book is packed with practical cases studies that show you how to effectively solve a broad set of data analysis problems using Python. You'll learn the latest versions of pandas, NumPy, IPython, and Jupyter in the process.",
     price: "Free",
-    image: "/python-data-analysis-book.jpg",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
     pages: 544,
     language: "English",
     format: "PDF",
@@ -64,7 +64,7 @@ const booksData: Record<string, any> = {
     longDescription:
       "The Deep Learning textbook is a resource intended to help students and practitioners enter the field of machine learning in general and deep learning in particular. The online version of the book is now complete and will remain available online for free.",
     price: "Free",
-    image: "/deep-learning-book-cover.png",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
     pages: 800,
     language: "English",
     format: "PDF",
@@ -86,9 +86,9 @@ export default function BookDetailPage({ bookId }: { bookId: string }) {
   if (!book) {
     return (
       <div className="min-h-screen bg-[#F5FBFE]">
-        <Navigation />
-        <div className="container mx-auto px-6 py-12 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Book not found</h1>
+    
+        <div className="container pt-12  mx-auto px-6 py-12 text-center">
+          <h1 className="text-2xl mt-22 font-bold text-gray-900 mb-4">Book not found</h1>
           <Button onClick={() => router.push("/library")}>Back to Library</Button>
         </div>
       </div>
@@ -120,9 +120,9 @@ export default function BookDetailPage({ bookId }: { bookId: string }) {
     <div className="min-h-screen bg-[#F5FBFE]">
       {/* <Navigation /> */}
 
-      <main className="container mx-auto px-6 pt-12 mt-12 py-8">
+      <main className="container mx-auto px-6  py-8">
         {/* Breadcrumb */}
-        <Button variant="ghost" onClick={() => router.push("/library")} className="mb-6 -ml-4">
+        <Button variant="ghost" onClick={() => router.push("/library")} className="mb-6 mt-22 -ml-4">
           <ChevronLeft className="w-4 h-4 mr-1" />
           Back to Library
         </Button>

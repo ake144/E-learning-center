@@ -23,7 +23,7 @@ const exams = [
     passingScore: 70,
     attempts: 1250,
     averageScore: 78,
-    image: "/python-programming-data-science.jpg",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const exams = [
     passingScore: 75,
     attempts: 890,
     averageScore: 72,
-    image: "/machine-learning-advanced-algorithms.jpg",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const exams = [
     passingScore: 65,
     attempts: 2100,
     averageScore: 81,
-    image: "/web-development-html-css-javascript.jpg",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 4,
@@ -65,7 +65,7 @@ const exams = [
     passingScore: 70,
     attempts: 1560,
     averageScore: 75,
-    image: "/algorithms-book-cover.png",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 5,
@@ -79,7 +79,7 @@ const exams = [
     passingScore: 70,
     attempts: 980,
     averageScore: 76,
-    image: "/ai-artificial-intelligence-course.jpg",
+    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 6,
@@ -93,7 +93,7 @@ const exams = [
     passingScore: 75,
     attempts: 670,
     averageScore: 68,
-    image: "/calculus-mathematics-fundamentals.jpg",
+    image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 7,
@@ -107,7 +107,7 @@ const exams = [
     passingScore: 65,
     attempts: 1420,
     averageScore: 79,
-    image: "/python-data-analysis-book.jpg",
+    image: "https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 8,
@@ -121,7 +121,7 @@ const exams = [
     passingScore: 80,
     attempts: 540,
     averageScore: 71,
-    image: "/deep-learning-book-cover.png",
+    image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80",
   },
 ]
 

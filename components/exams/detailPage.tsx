@@ -22,7 +22,7 @@ const examData = {
     passingScore: 70,
     attempts: 1250,
     averageScore: 78,
-    image: "/python-programming-data-science.jpg",
+    image:"https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
     topics: [
       "Python Syntax and Variables",
       "Data Types and Operators",
@@ -55,7 +55,7 @@ const examData = {
     passingScore: 75,
     attempts: 890,
     averageScore: 72,
-    image: "/machine-learning-advanced-algorithms.jpg",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
     topics: [
       "Supervised Learning Algorithms",
       "Unsupervised Learning",

@@ -35,6 +35,7 @@ export interface Course {
   slug: string;
   title: string;
   description: string;
+  image?: string;
   modules: Module[];
   progress: number; // 0-100
 }
@@ -44,51 +45,16 @@ export const courses: Course[] = [
     slug: "career-skills",
     title: "Career Skills",
     description: "Professional Development • Complete at your own pace",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 60,
-    modules: [
-      {
+   modules: [
+    {
         id: 1,
-        title: "Module 1: Self-Awareness & Career Foundations",
+        title: "Module 1: Communication & Interview Skills",
         progress: 100,
         lessons: [
           {
             id: 1,
-            title: "Identifying strengths, weaknesses, and interests",
-            duration: "5:30",
-            hasQuiz: false,
-            videoId: "JwNI1F21eK8",
-            overview: "Learn to identify your strengths, weaknesses, and interests for career growth.",
-            transcript: "This lesson covers self-assessment techniques to help you understand your professional profile.",
-            resources: ["Self-assessment worksheet", "Career interest survey", "Recommended reading"],
-            completed: true,
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "Module 2: Building a Professional Identity",
-        progress: 100,
-        lessons: [
-          {
-            id: 2,
-            title: "Writing an impactful one-page resume",
-            duration: "6:15",
-            videoId: "oroNbJYNkEc",
-            hasQuiz: false,
-            overview: "Master the art of resume writing for professional success.",
-            transcript: "This lesson guides you through creating a concise and effective resume.",
-            resources: ["Resume template", "Sample resumes", "Resume writing tips"],
-            completed: true,
-          },
-        ],
-      },
-     {
-        id: 3,
-        title: "Module 3: Communication & Interview Skills",
-        progress: 100,
-        lessons: [
-          {
-            id: 3,
             title: "Business email etiquette",
             duration: "4:45",
             videoId: "ppf9j8x0LA8",
@@ -137,13 +103,14 @@ export const courses: Course[] = [
           },
         ],
       },
+      
       {
-        id: 4,
-        title: "Module 4: Workplace Readiness",
+        id: 2,
+        title: "Module 2: Workplace Readiness",
         progress: 0,
         lessons: [
           {
-            id: 4,
+            id: 2,
             title: "Teamwork & collaboration",
             duration: "7:20",
             videoId: "QxOBgyitHek",
@@ -192,6 +159,44 @@ export const courses: Course[] = [
           },
         ],
       },
+      {
+        id: 3,
+        title: "Module 3: Self-Awareness & Career Foundations",
+        progress: 100,
+        lessons: [
+          {
+            id: 3,
+            title: "Identifying strengths, weaknesses, and interests",
+            duration: "5:30",
+            hasQuiz: false,
+            videoId: "JwNI1F21eK8",
+            overview: "Learn to identify your strengths, weaknesses, and interests for career growth.",
+            transcript: "This lesson covers self-assessment techniques to help you understand your professional profile.",
+            resources: ["Self-assessment worksheet", "Career interest survey", "Recommended reading"],
+            completed: true,
+          },
+        ],
+      },
+      {
+        id: 4,
+        title: "Module 4: Building a Professional Identity",
+        progress: 100,
+        lessons: [
+          {
+            id: 4,
+            title: "Writing an impactful one-page resume",
+            duration: "6:15",
+            videoId: "oroNbJYNkEc",
+            hasQuiz: false,
+            overview: "Master the art of resume writing for professional success.",
+            transcript: "This lesson guides you through creating a concise and effective resume.",
+            resources: ["Resume template", "Sample resumes", "Resume writing tips"],
+            completed: true,
+          },
+        ],
+      },
+     
+      
       {
         id: 5,
         title: "Module 5: Career Growth & Future Skills",
@@ -252,6 +257,125 @@ export const courses: Course[] = [
             ]
           },
         ],
+      }
+    ],
+  },
+  {
+    slug: "machine-learning-stanford",
+    title: "Machine Learning",
+    image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Stanford University • Advanced • 3 months\nA comprehensive course on machine learning, covering supervised and unsupervised learning, best practices, and real-world case studies.",
+    progress: 0,
+    modules: [
+      {
+        id: 1,
+        title: "Module 1: Introduction & Supervised Learning",
+        progress: 0,
+        lessons: [
+          {
+            id: 1,
+            title: "What is Machine Learning?",
+            duration: "8:30",
+            videoId: "GwIo3gDZCVQ",
+            overview: "Understand the basics of machine learning and its applications.",
+            transcript: "This lesson introduces the field of machine learning, its history, and its impact on technology and society.",
+            resources: ["Lecture slides", "Recommended reading: Chapter 1", "Stanford ML course notes"],
+            completed: false,
+            quiz: [
+              {
+                id: 1,
+                question: "Which of the following is a type of machine learning?",
+                options: ["Supervised learning", "Unsupervised learning", "Reinforcement learning", "All of the above"],
+                correctAnswer: "All of the above"
+              },
+              {
+                id: 2,
+                question: "Who is considered a pioneer in the field of machine learning?",
+                options: ["Andrew Ng", "Elon Musk", "Bill Gates", "Ada Lovelace"],
+                correctAnswer: "Andrew Ng"
+              }
+            ]
+          },
+          {
+            id: 2,
+            title: "Supervised Learning Algorithms",
+            duration: "12:10",
+            videoId: "qyyJKd-gj1E",
+            overview: "Explore key supervised learning algorithms such as linear regression and logistic regression.",
+            transcript: "This lesson covers the theory and practical implementation of supervised learning algorithms.",
+            resources: ["Python notebook: Linear Regression", "Quiz solutions", "Further reading"],
+            completed: false,
+            quiz: [
+              {
+                id: 1,
+                question: "Which algorithm is used for classification problems?",
+                options: ["Linear regression", "Logistic regression", "K-means", "PCA"],
+                correctAnswer: "Logistic regression"
+              },
+              {
+                id: 2,
+                question: "What is the main goal of supervised learning?",
+                options: ["Find patterns in unlabeled data", "Predict output from input data", "Cluster data", "Reduce dimensionality"],
+                correctAnswer: "Predict output from input data"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Module 2: Unsupervised Learning & Best Practices",
+        progress: 0,
+        lessons: [
+          {
+            id: 3,
+            title: "Unsupervised Learning Algorithms",
+            duration: "10:45",
+            videoId: "HcNDTlU5jt4",
+            overview: "Learn about clustering and dimensionality reduction techniques.",
+            transcript: "This lesson explores unsupervised learning, including k-means clustering and principal component analysis (PCA).",
+            resources: ["Lecture slides", "Python notebook: K-means", "PCA visualization tool"],
+            completed: false,
+            quiz: [
+              {
+                id: 1,
+                question: "Which algorithm is commonly used for clustering?",
+                options: ["Linear regression", "K-means", "Logistic regression", "SVM"],
+                correctAnswer: "K-means"
+              },
+              {
+                id: 2,
+                question: "What does PCA stand for?",
+                options: ["Principal Component Analysis", "Partial Cluster Algorithm", "Primary Classification Approach", "Pattern Clustering Algorithm"],
+                correctAnswer: "Principal Component Analysis"
+              }
+            ]
+          },
+          {
+            id: 4,
+            title: "Best Practices in Machine Learning",
+            duration: "9:20",
+            videoId: "tNa99PG8hR8",
+            overview: "Discover best practices for building robust machine learning models.",
+            transcript: "This lesson covers data preprocessing, model validation, and avoiding common pitfalls in ML projects.",
+            resources: ["Best practices checklist", "Validation techniques guide", "Case studies"],
+            completed: false,
+            quiz: [
+              {
+                id: 1,
+                question: "Why is data preprocessing important?",
+                options: ["It makes the data look nice", "It helps models learn better and generalize", "It is not important", "It is only for images"],
+                correctAnswer: "It helps models learn better and generalize"
+              },
+              {
+                id: 2,
+                question: "What is cross-validation used for?",
+                options: ["To split data for training and testing", "To visualize data", "To reduce overfitting", "Both 1 and 3"],
+                correctAnswer: "Both 1 and 3"
+              }
+            ]
+          }
+        ]
       }
     ],
   },

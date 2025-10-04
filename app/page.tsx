@@ -16,9 +16,10 @@ import { useProgressStore } from "@/store/quiz"
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
-  const CourseStore = useProgressStore((state)=>state.courses.find((c)=>c.slug =="career-skills"))
+  const CourseStore = useProgressStore((state)=>state.courses)
 
   
+  console.log("CourseStore:", CourseStore);
 
   // Expanded recommended courses with different categories
   const recommendedCourses = [
@@ -125,13 +126,13 @@ export default function StudentDashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {CourseStore && [CourseStore].map((courses) => {
+            {CourseStore && CourseStore.map((courses) => {
               const { text, variant } = getButtonProps(courses );
               return (
                 <Card key={courses.slug} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                   <div className="aspect-[16/9] bg-gray-100">
                     <img
-                      src={`http://images.unsplash.com/photo-1758691736664-0b83e4f1215e?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+                      src={courses.image}
                       alt={courses.title}
                       className="w-full h-full object-cover"
                     />

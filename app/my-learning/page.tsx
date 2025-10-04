@@ -159,7 +159,7 @@ export default function MyLearningPage() {
                       <div className="text-sm text-gray-600">Average Progress</div>
                     </div>
                   </div>
-                  <Progress value={overallProgress} className="h-2" />
+                  <Progress value={overallProgress} className="h-2 bg-blue-600" />
                 </div>
               </CardContent>
             </Card>

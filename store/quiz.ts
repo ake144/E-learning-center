@@ -19,7 +19,7 @@ export const useProgressStore = create<ProgressState>()(
         progress: 0, // Overall %
         modules: course.modules.map(module => ({
           ...module,
-          progress: 0, // Module %
+          progress: 0, 
           lessons: module.lessons.map(lesson => ({
             ...lesson,
             completed: false,

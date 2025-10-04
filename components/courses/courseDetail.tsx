@@ -42,7 +42,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
     rating: 4.9,
     students: 4200000,
     price: "Free",
-    image: "/machine-learning-advanced-algorithms.jpg",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
     skills: [
       "Python",
       "TensorFlow",

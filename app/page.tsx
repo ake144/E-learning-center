@@ -24,6 +24,7 @@ export default function StudentDashboard() {
   // Expanded recommended courses with different categories
   const recommendedCourses = [
     {
+      id: 1,
       title: "Python for Data Science",
       university: "University of Michigan",
       rating: 4.7,
@@ -34,6 +35,7 @@ export default function StudentDashboard() {
       image: "https://images.unsplash.com/photo-1649180556628-9ba704115795?q=80&w=1162&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 2,
       title: "Data Visualization with Tableau",
       university: "UC Davis",
       rating: 4.6,
@@ -44,6 +46,7 @@ export default function StudentDashboard() {
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 3,
       title: "Machine Learning",
       university: "Stanford University",
       rating: 4.9,
@@ -54,6 +57,7 @@ export default function StudentDashboard() {
       image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 4,
       title: "Business Strategy",
       university: "Harvard Business School",
       rating: 4.8,
@@ -64,6 +68,7 @@ export default function StudentDashboard() {
       image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 5,
       title: "Nutrition and Health",
       university: "Yale University",
       rating: 4.5,
@@ -74,6 +79,7 @@ export default function StudentDashboard() {
       image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 6,
       title: "Web Development Basics",
       university: "California Institute of the Arts",
       rating: 4.7,
@@ -167,6 +173,7 @@ export default function StudentDashboard() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendedCourses.map((course, index) => (
+              <Link key={index} href={`/courses/${course.id}`}>
               <Card key={index} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                 <div className="aspect-[16/9] bg-gray-100">
                   <img
@@ -176,6 +183,7 @@ export default function StudentDashboard() {
                   />
                 </div>
                 <CardContent className="p-4">
+                 
                   <Badge variant="secondary" className="mb-2 text-xs">{course.category}</Badge>
                   <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">{course.title}</h4>
                   <p className="text-sm text-gray-600 mb-2">{course.university}</p>
@@ -189,8 +197,10 @@ export default function StudentDashboard() {
                     <Badge variant="outline" className="text-xs">{course.level}</Badge>
                     <span>{course.duration}</span>
                   </div>
+                  
                 </CardContent>
               </Card>
+              </Link>
             ))}
           </div>
         </section>

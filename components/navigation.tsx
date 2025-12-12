@@ -5,9 +5,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookOpen, Search, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { UserMenu } from "@/components/navigation/user-menu"
 
 export function Navigation() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -22,16 +22,21 @@ export function Navigation() {
     { href: "/exams", label: "Exams" },
   ]
 
+  // Don't show navigation on auth pages
+  if (pathname?.startsWith("/auth")) {
+    return null
+  }
+
   return (
     <header className="border-b bg-white fixed w-full top-0 z-50 shadow-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-blue-600">SproutLearn</h1>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">SproutLearn</h1>
             </Link>
 
             <nav className="hidden md:flex items-center gap-6">
@@ -71,10 +76,8 @@ export function Navigation() {
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
 
-            <Avatar className="w-8 h-8">
-              <AvatarImage src="/student-avatar.png" />
-              <AvatarFallback>AS</AvatarFallback>
-            </Avatar>
+            {/* User Menu / Auth Buttons */}
+            <UserMenu />
           </div>
         </div>
 

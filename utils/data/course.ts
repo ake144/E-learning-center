@@ -38,6 +38,10 @@ export interface Course {
   image?: string;
   modules: Module[];
   progress: number; // 0-100
+  price: number;
+  originalPrice?: number;
+  currency: 'USD' | 'ETB';
+  priceETB?: number; // Price in Ethiopian Birr for Chapa
 }
 
 export const courses: Course[] = [
@@ -47,8 +51,12 @@ export const courses: Course[] = [
     description: "Professional Development • Complete at your own pace",
     image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     progress: 60,
-   modules: [
-    {
+    price: 29.99,
+    originalPrice: 49.99,
+    currency: 'USD',
+    priceETB: 1500,
+    modules: [
+      {
         id: 1,
         title: "Module 1: Communication & Interview Skills",
         progress: 100,
@@ -103,7 +111,7 @@ export const courses: Course[] = [
           },
         ],
       },
-      
+
       {
         id: 2,
         title: "Module 2: Workplace Readiness",
@@ -195,8 +203,8 @@ export const courses: Course[] = [
           },
         ],
       },
-     
-      
+
+
       {
         id: 5,
         title: "Module 5: Career Growth & Future Skills",
@@ -266,6 +274,10 @@ export const courses: Course[] = [
     image: "https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Stanford University • Advanced • 3 months\nA comprehensive course on machine learning, covering supervised and unsupervised learning, best practices, and real-world case studies.",
     progress: 0,
+    price: 49.99,
+    originalPrice: 89.99,
+    currency: 'USD',
+    priceETB: 2500,
     modules: [
       {
         id: 1,

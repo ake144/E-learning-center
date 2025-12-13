@@ -1,38 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server';
+import axios from 'axios';
 
-const CHAPA_SECRET_KEY = process.env.CHAPA_SECRET_KEY || 'CHASECK_TEST-placeholder';
+
+
+const CHAPA_SECRET_KEY = process.env.CHAPA_SECRET_KEY || '';
 const CHAPA_API_URL = 'https://api.chapa.co/v1/transaction/initialize';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { amount, email, first_name, last_name, tx_ref } = body;
+        const { amount, email,currency, phone_number,redirect_url,payment_options,customizations, first_name, last_name, tx_ref } = body;
 
-        const payload = {
+        const payload: any = {
             amount: amount.toString(),
             currency: 'ETB',
             email,
             first_name,
             last_name,
             tx_ref,
-            callback_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/chapa/callback`,
-            return_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success`,
+            callback_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/chapa/callback`,
+            redirect_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success`,
             customization: {
                 title: 'Course Enrollment',
                 description: 'Payment for course access',
             },
         };
 
-        const response = await fetch(CHAPA_API_URL, {
-            method: 'POST',
+        if (phone_number) {
+            payload.phone_number = phone_number;
+        }
+
+        console.log('Chapa initialize payload:', payload);
+
+        const response = await axios.post(CHAPA_API_URL, payload, {
             headers: {
                 'Authorization': `Bearer ${CHAPA_SECRET_KEY}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        console.log('Chapa initialize response:', response.data);
+
+
+        const data = response.data;
 
         if (data.status === 'success') {
             return NextResponse.json({
@@ -45,9 +55,9 @@ export async function POST(request: NextRequest) {
             );
         }
     } catch (error: any) {
-        console.error('Chapa error:', error);
+        console.error('Chapa error:', error.response?.data || error.message);
         return NextResponse.json(
-            { error: error.message },
+            { error: error.response?.data?.message || error.message },
             { status: 500 }
         );
     }

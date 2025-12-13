@@ -10,10 +10,11 @@ interface ChapaButtonProps {
     firstName: string
     lastName: string
     txRef: string
+    phone_number?: string
     onSuccess?: () => void
 }
 
-export function ChapaButton({ amount, email, firstName, lastName, txRef }: ChapaButtonProps) {
+export function ChapaButton({ amount, email, firstName, lastName, phone_number, txRef }: ChapaButtonProps) {
     const [isLoading, setIsLoading] = useState(false)
 
     const handlePayment = async () => {
@@ -28,10 +29,16 @@ export function ChapaButton({ amount, email, firstName, lastName, txRef }: Chapa
                     first_name: firstName,
                     last_name: lastName,
                     tx_ref: txRef,
+                    phone_number,
+                    // payment_options: "telebirr,cbe_birr,amole,card",
+
                 }),
             })
 
             const data = await response.json()
+
+            console.log("Chapa response:", data)
+
 
             if (data.checkout_url) {
                 window.location.href = data.checkout_url

@@ -9,7 +9,7 @@ const CHAPA_API_URL = 'https://api.chapa.co/v1/transaction/initialize';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { amount, email,currency, phone_number,redirect_url,payment_options,customizations, first_name, last_name, tx_ref } = body;
+        const { amount, email,currency, phone_number,redirect_url,payment_options,customizations, first_name, last_name, tx_ref, slug } = body;
 
         const payload: any = {
             amount: amount.toString(),
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
             last_name,
             tx_ref,
             callback_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/chapa/callback`,
-            return_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success`,
+            return_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success?slug=${slug}`,
             customization: {
                 title: 'Enrollment',
                 description: 'Payment for course access',

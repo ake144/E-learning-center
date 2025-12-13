@@ -53,7 +53,7 @@ export default function StudentDashboard() {
           ) : (
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white shadow-xl">
               <div className="max-w-2xl">
-                <h1 className="text-4xl font-bold mb-4">Unlock Your Potential with SproutLearn</h1>
+                <h1 className="text-4xl font-bold mb-4">Unlock Your Potential with Global Pathways Academy</h1>
                 <p className="text-blue-100 text-lg mb-8">
                   Access world-class courses, hands-on projects, and job-ready certificates.
                   Start learning for free today.

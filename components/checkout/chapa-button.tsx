@@ -11,10 +11,11 @@ interface ChapaButtonProps {
     lastName: string
     txRef: string
     phone_number?: string
+    courseSlug: string
     onSuccess?: () => void
 }
 
-export function ChapaButton({ amount, email, firstName, lastName, phone_number, txRef }: ChapaButtonProps) {
+export function ChapaButton({ amount, email, firstName, lastName, phone_number, txRef, courseSlug }: ChapaButtonProps) {
     const [isLoading, setIsLoading] = useState(false)
 
     const handlePayment = async () => {
@@ -30,6 +31,7 @@ export function ChapaButton({ amount, email, firstName, lastName, phone_number, 
                     last_name: lastName,
                     tx_ref: txRef,
                     phone_number,
+                    slug: courseSlug,
                     // payment_options: "telebirr,cbe_birr,amole,card",
 
                 }),

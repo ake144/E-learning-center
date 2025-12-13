@@ -77,6 +77,7 @@ export default function CheckoutPage({ params }: { params: { slug: string } }) {
                                         lastName={user.name.split(' ')[1] || ''}
                                         txRef={txRef}
                                         phone_number={user.phone || ''}
+                                        courseSlug={course.slug}
                                     />
                                 )}
                             </div>

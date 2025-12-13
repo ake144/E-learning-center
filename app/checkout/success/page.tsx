@@ -4,8 +4,21 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, ArrowRight, Download } from "lucide-react"
+import { useSearchParams } from "next/navigation"
+import { useEffect, Suspense } from "react"
+import { useAuthStore } from "@/store/auth-store"
 
-export default function SuccessPage() {
+function SuccessContent() {
+    const searchParams = useSearchParams()
+    const slug = searchParams.get('slug')
+    const { enrollCourse } = useAuthStore()
+
+    useEffect(() => {
+        if (slug) {
+            enrollCourse(slug)
+        }
+    }, [slug, enrollCourse])
+
     return (
         <div className="min-h-screen bg-gray-50 pt-24 pb-12 flex items-center justify-center">
             <Card className="w-full max-w-lg border-0 shadow-xl overflow-hidden">
@@ -51,5 +64,13 @@ export default function SuccessPage() {
                 </CardContent>
             </Card>
         </div>
+    )
+}
+
+export default function SuccessPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SuccessContent />
+        </Suspense>
     )
 }

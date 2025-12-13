@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
             last_name,
             tx_ref,
             callback_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/chapa/callback`,
-            redirect_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success`,
+            return_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success`,
             customization: {
-                title: 'Course Enrollment',
+                title: 'Enrollment',
                 description: 'Payment for course access',
             },
         };

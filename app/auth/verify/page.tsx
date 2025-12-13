@@ -100,7 +100,13 @@ export default function VerifyPage() {
 
             // For demo: show OTP in alert
             if (data._demo_otp) {
-                alert(`Demo Mode: Your new OTP is ${data._demo_otp}`)
+                toast("OTP Resent", {
+                    description: `Demo Mode: Your new OTP is ${data._demo_otp}`,
+                    action: {
+                        label: "Copy OTP",
+                        onClick: () => navigator.clipboard.writeText(data._demo_otp),
+                    },
+                })
             }
 
             // Reset countdown

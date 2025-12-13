@@ -98,7 +98,13 @@ export default function SignupPage() {
 
             // For demo: show OTP in alert (remove in production)
             if (data._demo_otp) {
-                alert(`Demo Mode: Your OTP is ${data._demo_otp}`)
+                toast("Account created successfully", {
+                    description: `Demo Mode: Your OTP is ${data._demo_otp}`,
+                    action: {
+                        label: "Copy OTP",
+                        onClick: () => navigator.clipboard.writeText(data._demo_otp),
+                    },
+                })
             }
 
             // Redirect to verification page

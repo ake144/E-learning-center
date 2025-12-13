@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/utils/reactQueryProvider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
                 
              {children}
              <Footer   />
+             <Toaster />
           </body>
        </QueryProvider>
     </html>

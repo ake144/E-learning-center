@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { toast } from "sonner"
 
 interface ChapaButtonProps {
     amount: number
@@ -45,11 +46,11 @@ export function ChapaButton({ amount, email, firstName, lastName, phone_number, 
             if (data.checkout_url) {
                 window.location.href = data.checkout_url
             } else {
-                alert("Failed to initialize payment")
+                toast.error("Failed to initialize payment")
             }
         } catch (error) {
             console.error("Chapa error:", error)
-            alert("Something went wrong")
+            toast.error("Something went wrong")
         } finally {
             setIsLoading(false)
         }

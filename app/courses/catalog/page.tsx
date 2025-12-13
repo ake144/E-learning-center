@@ -26,6 +26,7 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { Navigation } from "@/components/navigation"
+import { courses } from "@/utils/data/course"
 
 export default function CoursesCatalogPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -35,115 +36,34 @@ export default function CoursesCatalogPage() {
   const [selectedPrice, setSelectedPrice] = useState("all")
 
   const categories = [
-    { id: "all", name: "All Courses", icon: BookOpen, count: 2847, color: "bg-blue-100 text-blue-700" },
-    { id: "programming", name: "Computer Science", icon: Code, count: 892, color: "bg-green-100 text-green-700" },
-    { id: "data-science", name: "Data Science", icon: TrendingUp, count: 456, color: "bg-purple-100 text-purple-700" },
-    { id: "business", name: "Business", icon: Briefcase, count: 378, color: "bg-orange-100 text-orange-700" },
-    { id: "math", name: "Mathematics", icon: Calculator, count: 234, color: "bg-red-100 text-red-700" },
-    { id: "science", name: "Physical Science", icon: Beaker, count: 189, color: "bg-cyan-100 text-cyan-700" },
-    { id: "languages", name: "Language Learning", icon: Globe, count: 156, color: "bg-indigo-100 text-indigo-700" },
-    { id: "arts", name: "Arts and Humanities", icon: Palette, count: 134, color: "bg-pink-100 text-pink-700" },
-    { id: "health", name: "Health", icon: GraduationCap, count: 98, color: "bg-emerald-100 text-emerald-700" },
-    { id: "psychology", name: "Psychology", icon: Brain, count: 87, color: "bg-violet-100 text-violet-700" },
+    { id: "all", name: "All Courses", icon: BookOpen, count: courses.length, color: "bg-blue-100 text-blue-700" },
+    { id: "education", name: "Education", icon: GraduationCap, count: 1, color: "bg-green-100 text-green-700" },
+    // { id: "programming", name: "Computer Science", icon: Code, count: 892, color: "bg-green-100 text-green-700" },
+    // { id: "data-science", name: "Data Science", icon: TrendingUp, count: 456, color: "bg-purple-100 text-purple-700" },
+    // { id: "business", name: "Business", icon: Briefcase, count: 378, color: "bg-orange-100 text-orange-700" },
+    // { id: "math", name: "Mathematics", icon: Calculator, count: 234, color: "bg-red-100 text-red-700" },
+    // { id: "science", name: "Physical Science", icon: Beaker, count: 189, color: "bg-cyan-100 text-cyan-700" },
+    // { id: "languages", name: "Language Learning", icon: Globe, count: 156, color: "bg-indigo-100 text-indigo-700" },
+    // { id: "arts", name: "Arts and Humanities", icon: Palette, count: 134, color: "bg-pink-100 text-pink-700" },
+    // { id: "health", name: "Health", icon: GraduationCap, count: 98, color: "bg-emerald-100 text-emerald-700" },
+    // { id: "psychology", name: "Psychology", icon: Brain, count: 87, color: "bg-violet-100 text-violet-700" },
   ]
 
-const allCourses = [
-  {
-    id: 1,
-    title: "Machine Learning Specialization",
-    instructor: "Andrew Ng",
-    university: "Stanford University",
-    category: "data-science",
-    level: "Intermediate",
-    duration: "3 months",
-    rating: 4.9,
-    students: 4200000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1525471412139-2fb0d8a7f72d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    skills: ["Python", "TensorFlow", "Neural Networks", "Deep Learning"],
-    description: "Learn the fundamentals of machine learning and build your first ML models.",
-  },
-  {
-    id: 2,
-    title: "Python for Everybody Specialization",
-    instructor: "Charles Severance",
-    university: "University of Michigan",
-    category: "programming",
+const allCourses = courses.map(course => ({
+    id: course.slug,
+    title: course.title,
+    instructor: "Global Pathways Academy",
+    university: "Global Pathways Academy",
+    category: "education",
     level: "Beginner",
-    duration: "8 months",
-    rating: 4.8,
-    students: 2100000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    skills: ["Python", "Data Structures", "Web Scraping", "Databases"],
-    description:
-      "Learn to program and analyze data with Python. Develop programs to gather, clean, analyze, and visualize data.",
-  },
-  {
-    id: 3,
-    title: "Financial Markets",
-    instructor: "Robert Shiller",
-    university: "Yale University",
-    category: "business",
-    level: "Beginner",
-    duration: "7 weeks",
-    rating: 4.7,
-    students: 890000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    skills: ["Finance", "Economics", "Investment", "Risk Management"],
-    description:
-      "An overview of the ideas, methods, and institutions that permit human society to manage risks and foster enterprise.",
-  },
-  {
-    id: 4,
-    title: "Introduction to Mathematical Thinking",
-    instructor: "Keith Devlin",
-    university: "Stanford University",
-    category: "math",
-    level: "Intermediate",
-    duration: "10 weeks",
-    rating: 4.6,
-    students: 567000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-    skills: ["Logic", "Proofs", "Mathematical Reasoning", "Problem Solving"],
-    description:
-      "Learn how to think the way mathematicians do – a powerful cognitive process developed over thousands of years.",
-  },
-  {
-    id: 5,
-    title: "The Science of Well-Being",
-    instructor: "Laurie Santos",
-    university: "Yale University",
-    category: "psychology",
-    level: "Beginner",
-    duration: "6 weeks",
-    rating: 4.9,
-    students: 3800000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    skills: ["Psychology", "Happiness", "Mindfulness", "Behavioral Science"],
-    description:
-      "Learn about the science of happiness and discover evidence-based strategies for living a more fulfilling life.",
-  },
-  {
-    id: 6,
-    title: "Full Stack Web Development",
-    instructor: "Jogesh Muppala",
-    university: "The Hong Kong University of Science and Technology",
-    category: "programming",
-    level: "Intermediate",
-    duration: "6 months",
-    rating: 4.7,
-    students: 456000,
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
-    skills: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB"],
-    description:
-      "Learn front-end and hybrid mobile development, with server-side support, for implementing a multi-platform solution.",
-  },
-];
+    duration: "Self-paced",
+    rating: 5.0,
+    students: 1200,
+    price: course.price === 0 ? "Free" : `$${course.price}`,
+    image: course.image,
+    skills: ["Scholarships", "Interviews", "Career Development"],
+    description: course.description
+}));
 
   const filteredCourses = allCourses.filter((course) => {
     const matchesSearch =

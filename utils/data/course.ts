@@ -64,7 +64,7 @@ export const courses: Course[] = [
             id: 1,
             title: "Understanding Scholarship Types",
             duration: "10:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "Learn about different types of scholarships available globally.",
             transcript: "Introduction to merit-based, need-based, and country-specific scholarships.",
             resources: ["Scholarship Database List", "Search Strategy Template"],
@@ -74,7 +74,7 @@ export const courses: Course[] = [
             id: 2,
             title: "Shortlisting the Best Opportunities",
             duration: "15:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "How to filter and select scholarships that match your profile.",
             transcript: "Techniques for efficient shortlisting and organizing applications.",
             resources: ["Shortlisting Spreadsheet"],
@@ -91,7 +91,7 @@ export const courses: Course[] = [
             id: 3,
             title: "Structuring Your SOP",
             duration: "12:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "The ideal structure for a winning Statement of Purpose.",
             transcript: "Breakdown of introduction, body paragraphs, and conclusion.",
             resources: ["SOP Template", "Winning SOP Examples"],
@@ -101,7 +101,7 @@ export const courses: Course[] = [
             id: 4,
             title: "Writing Compelling Hooks",
             duration: "08:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "How to start your essay with a strong hook.",
             transcript: "Examples of engaging opening lines.",
             resources: [],
@@ -118,7 +118,7 @@ export const courses: Course[] = [
             id: 5,
             title: "Academic vs. Professional CV",
             duration: "10:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "Differences between academic CVs and professional resumes.",
             transcript: "Tailoring your CV for scholarship committees.",
             resources: ["Academic CV Template", "Action Verbs List"],
@@ -135,7 +135,7 @@ export const courses: Course[] = [
             id: 6,
             title: "Choosing the Right Referees",
             duration: "05:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "Who to ask for recommendation letters.",
             transcript: "Selecting referees who can vouch for your academic and personal qualities.",
             resources: ["Email Request Template"],
@@ -145,7 +145,7 @@ export const courses: Course[] = [
             id: 7,
             title: "Drafting Guidance for Referees",
             duration: "07:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "How to help your referees write strong letters.",
             transcript: "Providing bullet points and context to your referees.",
             resources: ["LOR Guidelines PDF"],
@@ -162,7 +162,7 @@ export const courses: Course[] = [
             id: 8,
             title: "Common Interview Questions",
             duration: "20:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "Top questions asked in scholarship interviews.",
             transcript: "Analysis of common questions and how to answer them.",
             resources: ["Question Bank"],
@@ -172,7 +172,7 @@ export const courses: Course[] = [
             id: 9,
             title: "Mock Interview Practice",
             duration: "25:00",
-            videoId: "dQw4w9WgXcQ", // Placeholder
+            videoId: "tjXIfam5qLE", // Placeholder
             overview: "Simulated interview session.",
             transcript: "Watch a mock interview and learn from the feedback.",
             resources: ["Self-Evaluation Checklist"],

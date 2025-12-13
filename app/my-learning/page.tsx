@@ -35,7 +35,7 @@ import {
 import { courses } from "@/utils/data/course"
 import { LearningProgress } from "@/components/my-learning/progress"
 import { useAuthStore } from "@/store/auth-store"
-import { useProgressStore } from "@/store/progress-store"
+import { useProgressCourseStore } from "@/store/progress-store"
 import { useNotesStore, Note } from "@/store/notes-store"
 import { useFlashcardsStore, Deck } from "@/store/flashcards-store"
 import Link from "next/link"
@@ -45,7 +45,7 @@ import { Label } from "@/components/ui/label"
 export default function MyLearningPage() {
   const router = useRouter()
   const { user, isAuthenticated } = useAuthStore()
-  const { getCourseProgress } = useProgressStore()
+  const { getCourseProgress } = useProgressCourseStore()
   const { notes, addNote, updateNote, deleteNote, toggleNoteStar } = useNotesStore()
   const { decks, createDeck, deleteDeck, addCard, deleteCard } = useFlashcardsStore()
 

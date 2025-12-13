@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { use } from "react";
+import {useProgressCourseStore} from "@/store/progress-store";
 import {
   Play, Pause, SkipForward, SkipBack, Volume2, Maximize, Clock, CheckCircle, Circle, FileText, Download, Bookmark, ChevronLeft,
-  Target, MessageSquare, ThumbsUp, ArrowRight,
+  Target, MessageSquare, ThumbsUp, ArrowRight, Lock
 } from "lucide-react";
 import { courses } from "@/utils/data/course";
 // import PlyrVideoComponent from "@/components/plyr-video";
@@ -32,6 +33,7 @@ export default function LessonDetailPage() {
 
   const {submitQuiz, updateVideoProgress} = useProgressStore();
 
+
   const { courseSlug, lessonId } = params;
   console.log("Params:", params);
 
@@ -41,8 +43,60 @@ export default function LessonDetailPage() {
   if (!course) return notFound();
 
   const lessonIdNum = lessonId ? parseInt(lessonId as string, 10) : NaN;
-  const lesson = course.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonIdNum);
+  const allLessons = course.modules.flatMap((m) => m.lessons);
+  const lesson = allLessons.find((l) => l.id === lessonIdNum);
+  
   if (!lesson) return notFound();
+
+  // Access Control Logic
+  const currentLessonIndex = allLessons.findIndex((l) => l.id === lessonIdNum);
+  const isFirstLesson = currentLessonIndex === 0;
+  const prevLesson = currentLessonIndex > 0 ? allLessons[currentLessonIndex - 1] : null;
+  
+  const isCourseCompleted = course.progress === 100;
+  const isPrevLessonCompleted = prevLesson ? prevLesson.completed : false; 
+  
+  // Unlock if:
+  // 1. It's the first lesson
+  // 2. The course is fully completed (review mode)
+  // 3. The previous lesson is completed
+  const isLocked = !isFirstLesson && !isCourseCompleted && !isPrevLessonCompleted;
+
+  console.log("Lesson Access:", { 
+    lessonId: lessonIdNum, 
+    index: currentLessonIndex, 
+    isFirst: isFirstLesson, 
+    locked: isLocked,
+    prevCompleted: isPrevLessonCompleted 
+  });
+
+  // Redirect if locked
+  useEffect(() => {
+    if (isLocked && prevLesson) {
+       // Optional: Add a toast or notification here
+       router.push(`/my-learning/${courseSlug}/${prevLesson.id}`);
+    }
+  }, [isLocked, prevLesson, courseSlug, router]);
+
+  if (isLocked) {
+      return (
+          <div className="min-h-screen flex items-center justify-center bg-gray-50">
+              <div className="text-center p-8">
+                  <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-gray-500" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Lesson Locked</h2>
+                  <p className="text-gray-600 mb-6">
+                      Please complete the previous lesson <br/>
+                      <span className="font-semibold">"{prevLesson?.title}"</span> to continue.
+                  </p>
+                  <Button onClick={() => router.push(`/my-learning/${courseSlug}/${prevLesson?.id}`)}>
+                      Go to Previous Lesson
+                  </Button>
+              </div>
+          </div>
+      );
+  }
 
 
   const module = course.modules.find((m) => m.lessons.some((l) => l.id === lesson.id));
@@ -67,6 +121,8 @@ export default function LessonDetailPage() {
     });
   }
 
+
+  const lessonIsCompleted =(courseSlug: string, lessonId: number) => useProgressCourseStore((state) => state.isLessonCompleted(courseSlug, lessonId)) ;
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -415,7 +471,7 @@ export default function LessonDetailPage() {
                   <div key={mod.id} className="space-y-2">
                     <h4 className="font-medium text-sm text-gray-900 mt-3 first:mt-0">{mod.title}</h4>
                     {mod.lessons.map((les) => (
-                      <div
+                      <button
                         key={les.id}
                         className={`p-3 rounded-lg border transition-all cursor-pointer ${
                           les.id === lesson.id
@@ -424,6 +480,10 @@ export default function LessonDetailPage() {
                               ? "bg-green-50 border-green-200 hover:bg-green-100"
                               : "hover:bg-gray-50 border-gray-200"
                         }`}
+                      disabled={
+                        !lessonIsCompleted(courseSlug, les.id-1)
+                           
+                      }
                         onClick={() => router.replace(`/my-learning/${courseSlug}/${les.id}`)}
                       >
                         <div className="flex items-start gap-3">
@@ -441,7 +501,7 @@ export default function LessonDetailPage() {
                             <p className="text-xs text-gray-500">{les.duration}</p>
                           </div>
                         </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 ))}

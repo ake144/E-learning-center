@@ -11,7 +11,7 @@ interface ProgressState {
     getCourseProgress: (courseSlug: string, totalLessons: number) => number;
 }
 
-export const useProgressStore = create<ProgressState>()(
+export const useProgressCourseStore = create<ProgressState>()(
     persist(
         (set, get) => ({
             completedLessons: [],

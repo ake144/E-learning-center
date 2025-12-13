@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* LearnHub Column */}
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4">LearnHub</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">Global Pathways</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/about" className="text-sm text-gray-600 hover:text-blue-500 transition-colors">
@@ -37,7 +37,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/plus" className="text-sm text-gray-600 hover:text-blue-500 transition-colors">
-                  LearnHub Plus
+                  Global Pathways Plus
                 </Link>
               </li>
               <li>
@@ -104,7 +104,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/podcast" className="text-sm text-gray-600 hover:text-blue-500 transition-colors">
-                  The LearnHub Podcast
+                  The Global Pathways Podcast
                 </Link>
               </li>
               <li>
@@ -223,7 +223,7 @@ export function Footer() {
 
         {/* Bottom Section */}
         <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-gray-600">© 2025 LearnHub Inc. All rights reserved.</p>
+          <p className="text-sm text-gray-600">© 2025 Global Pathways Academy Inc. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-gray-600 hover:text-blue-500 transition-colors">
               <Facebook className="w-5 h-5" />

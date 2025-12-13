@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { BookOpen, Search, Menu, X } from "lucide-react"
+import { BookOpen, Search, Menu, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { UserMenu } from "@/components/navigation/user-menu"
 
@@ -33,10 +33,10 @@ export function Navigation() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-500 rounded-lg flex items-center justify-center shadow-md">
+                <Globe className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Global Pathways Academy</h1>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-teal-600 bg-clip-text text-transparent">Global Pathways Academy</h1>
             </Link>
 
             <nav className="hidden md:flex items-center gap-6">

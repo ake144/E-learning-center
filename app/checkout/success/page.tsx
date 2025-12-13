@@ -50,13 +50,13 @@ function SuccessContent() {
 
                     <div className="space-y-3">
                         <Link href="/my-learning">
-                            <Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl">
+                            <Button className="w-full h-12 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl">
                                 Start Learning
                                 <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                         </Link>
 
-                        <Button variant="outline" className="w-full h-12 rounded-xl">
+                        <Button variant="outline" className="w-full h-12 cursor-pointer rounded-xl">
                             <Download className="w-4 h-4 mr-2" />
                             Download Receipt
                         </Button>

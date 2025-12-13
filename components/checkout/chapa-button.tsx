@@ -60,19 +60,19 @@ export function ChapaButton({ amount, email, firstName, lastName, phone_number, 
             <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
                 <p className="text-green-800 font-medium mb-2">Pay with Chapa</p>
                 <p className="text-sm text-green-600 mb-6">
-                    You will be redirected to Chapa's secure payment page to complete your purchase using Telebirr, CBE Birr, or local cards.
+                    You will be redirected to Chapa's secure payment page to complete your purchase using Telebirr, CBE Birr,M-pessa,local or international cards.
                 </p>
 
-                <div className="flex justify-center gap-4 mb-6">
+                {/* <div className="flex justify-center gap-4 mb-6">
                     <div className="h-8 bg-white rounded px-2 flex items-center border">Telebirr</div>
                     <div className="h-8 bg-white rounded px-2 flex items-center border">CBE Birr</div>
-                    <div className="h-8 bg-white rounded px-2 flex items-center border">Amole</div>
-                </div>
+                    <div className="h-8 bg-white rounded px-2 flex items-center border">M-Pessa</div>
+                </div> */}
 
                 <Button
                     onClick={handlePayment}
                     disabled={isLoading}
-                    className="w-full h-12 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
+                    className="w-full cursor-pointer h-12 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl"
                 >
                     {isLoading ? (
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

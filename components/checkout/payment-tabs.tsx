@@ -22,7 +22,7 @@ export function PaymentTabs({ activeTab, onTabChange }: PaymentTabsProps) {
                 )}
             >
                 <CreditCard className="w-6 h-6 mb-2" />
-                <span className="font-medium">Credit Card</span>
+                <span className="font-medium">Credit Card(Stripe)</span>
                 <span className="text-xs text-gray-500 mt-1">International</span>
             </button>
 

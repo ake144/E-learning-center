@@ -95,12 +95,12 @@ export default function CourseDetailPage({ id }: { id: string }) {
               <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
                 <div className="flex items-center gap-1">
                   <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                  <span className="font-medium">4.8</span>
-                  <span>(1.2k students)</span>
+                  <span className="font-medium">5.0</span>
+                  <span>(New)</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock className="w-4 h-4" />
-                  <span>{course.modules.length * 4} hours</span>
+                  <span>Self-paced</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Globe className="w-4 h-4" />
@@ -109,7 +109,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
               </div>
 
               <div className="flex items-center gap-2 mb-6">
-                <Badge className="bg-blue-100 text-blue-700">Intermediate</Badge>
+                <Badge className="bg-blue-100 text-blue-700">Scholarship</Badge>
                 <Badge variant="outline">Career</Badge>
               </div>
             </div>
@@ -120,8 +120,8 @@ export default function CourseDetailPage({ id }: { id: string }) {
                 <TabsTrigger value="syllabus" className="data-[state=active]:bg-white">
                   Syllabus
                 </TabsTrigger>
-                <TabsTrigger value="about" className="data-[state=active]:bg-white">
-                  About
+                <TabsTrigger value="overview" className="data-[state=active]:bg-white">
+                  Overview
                 </TabsTrigger>
                 <TabsTrigger value="instructor" className="data-[state=active]:bg-white">
                   Instructor
@@ -177,8 +177,8 @@ export default function CourseDetailPage({ id }: { id: string }) {
                               <div className="flex-1">
                                 <h4
                                   className={`font-medium ${lesson.completed && isEnrolled
-                                      ? "text-green-700 line-through"
-                                      : "text-gray-900"
+                                    ? "text-green-700 line-through"
+                                    : "text-gray-900"
                                     }`}
                                 >
                                   {lesson.title}
@@ -196,23 +196,49 @@ export default function CourseDetailPage({ id }: { id: string }) {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="about">
+              <TabsContent value="overview">
                 <Card className="border border-gray-200 shadow-sm">
                   <CardContent className="p-6 space-y-6">
                     <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-4">What you'll learn</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4">What you'll master</h3>
+                      <div className="grid grid-cols-1 gap-3">
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                          <p className="text-gray-700">Master core concepts and practical skills</p>
+                          <p className="text-gray-700">Scholarship search strategy & shortlisting</p>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                          <p className="text-gray-700">Build real-world projects for your portfolio</p>
+                          <p className="text-gray-700">Motivation letter / SOP structure</p>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                          <p className="text-gray-700">Earn a certificate of completion</p>
+                          <p className="text-gray-700">CV/Resume polishing for international reviewers</p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                          <p className="text-gray-700">Recommendation letter guidance</p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                          <p className="text-gray-700">Interview preparation + mock questions</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4">Course format</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="flex flex-col items-center p-4 bg-blue-50 rounded-lg text-center">
+                          <Play className="w-8 h-8 text-blue-600 mb-2" />
+                          <span className="font-medium text-gray-900">Short lessons</span>
+                        </div>
+                        <div className="flex flex-col items-center p-4 bg-blue-50 rounded-lg text-center">
+                          <CheckCircle className="w-8 h-8 text-blue-600 mb-2" />
+                          <span className="font-medium text-gray-900">Checklists & examples</span>
+                        </div>
+                        <div className="flex flex-col items-center p-4 bg-blue-50 rounded-lg text-center">
+                          <Target className="w-8 h-8 text-blue-600 mb-2" />
+                          <span className="font-medium text-gray-900">Practice exercises</span>
                         </div>
                       </div>
                     </div>
@@ -228,10 +254,10 @@ export default function CourseDetailPage({ id }: { id: string }) {
                         <Users className="w-8 h-8 text-gray-500" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-gray-900 mb-1">Expert Instructor</h3>
-                        <p className="text-gray-600 mb-3">Senior Developer & Educator</p>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-1">Dr. Sarah Johnson</h3>
+                        <p className="text-gray-600 mb-3">Scholarship Consultant & Educator</p>
                         <p className="text-gray-700 mb-4">
-                          Learn from industry experts with years of experience in the field.
+                          Helping students achieve their dreams of studying abroad with expert guidance on scholarships and applications.
                         </p>
                       </div>
                     </div>
@@ -260,15 +286,10 @@ export default function CourseDetailPage({ id }: { id: string }) {
                     <>
                       <div className="flex items-center justify-center gap-2 mb-1">
                         <span className="text-3xl font-bold text-gray-900">${course.price}</span>
-                        {course.originalPrice && (
-                          <span className="text-lg text-gray-500 line-through">${course.originalPrice}</span>
-                        )}
                       </div>
-                      {course.originalPrice && (
-                        <Badge variant="secondary" className="bg-green-100 text-green-700">
-                          {Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)}% OFF
-                        </Badge>
-                      )}
+                      <div className="text-sm text-gray-500 mb-2">
+                        One-time payment • Lifetime access
+                      </div>
                     </>
                   )}
                 </div>
@@ -295,7 +316,7 @@ export default function CourseDetailPage({ id }: { id: string }) {
                 ) : (
                   <div className="space-y-3">
                     <Button
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 text-lg shadow-lg shadow-blue-200"
+                      className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white h-12 text-lg shadow-lg shadow-blue-200"
                       onClick={handleEnroll}
                     >
                       Enroll Now
@@ -303,7 +324,8 @@ export default function CourseDetailPage({ id }: { id: string }) {
                     <p className="text-xs text-center text-gray-500">
                       30-Day Money-Back Guarantee
                     </p>
-                    <Button variant="outline" className="w-full bg-transparent">
+                    <Button variant="outline" 
+                    className="w-full bg-transparent">
                       <Heart className="w-4 h-4 mr-2" />
                       Save to Wishlist
                     </Button>

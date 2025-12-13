@@ -65,7 +65,7 @@ export default function StudentDashboard() {
                     </Button>
                   </Link>
                   <Link href="/courses">
-                    <Button variant="outline" className="border-white text-white hover:bg-white/10 h-12 px-8 text-lg">
+                    <Button variant="outline" className="bg-white text-blue-600 hover:bg-blue-50  h-12 px-8 text-lg">
                       Browse Courses
                     </Button>
                   </Link>

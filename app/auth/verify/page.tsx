@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { BookOpen, Mail, ArrowRight, RefreshCw, CheckCircle } from "lucide-react"
 import { OTPInput } from "@/components/auth/otp-input"
 import { useAuthStore } from "@/store/auth-store"
+import { toast } from "sonner"
 
 export default function VerifyPage() {
     const router = useRouter()

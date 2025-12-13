@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { BookOpen, Mail, Lock, User, Phone, Eye, EyeOff, ArrowRight, CheckCircle } from "lucide-react"
 import { useAuthStore } from "@/store/auth-store"
+import { toast } from "sonner"
 
 export default function SignupPage() {
     const router = useRouter()

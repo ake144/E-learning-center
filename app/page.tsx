@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+// import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { BookOpen, Search, Play, Star, ChevronRight, Calendar, Bell, LayoutGrid, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Course, courses } from "@/utils/data/course"
@@ -75,7 +75,7 @@ export default function StudentDashboard() {
           )}
         </div>
 
-        {/* Continue Learning (Only if logged in and enrolled) */}
+      
         {isAuthenticated && myCourses.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center justify-between mb-4">

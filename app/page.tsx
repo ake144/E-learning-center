@@ -10,18 +10,21 @@ import { Progress } from "@/components/ui/progress"
 // import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { BookOpen, Search, Play, Star, ChevronRight, Calendar, Bell, LayoutGrid, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { Course, courses } from "@/utils/data/course"
+import { Course } from "@/utils/data/course"
 import { useAuthStore } from "@/store/auth-store"
+import { useCourseStore } from "@/store/course-store"
 
 export default function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
   const { user, isAuthenticated } = useAuthStore()
+  const { courses, fetchCourses } = useCourseStore()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    fetchCourses()
+  }, [fetchCourses])
 
   // Filter courses user is enrolled in
   const myCourses = mounted && user

@@ -24,16 +24,37 @@ import {
   Globe,
   Target,
 } from "lucide-react"
-import { courses } from "@/utils/data/course"
+import { Course } from "@/utils/data/course"
 import { useAuthStore } from "@/store/auth-store"
+import { useCourseStore } from "@/store/course-store"
 
 export default function CourseDetailPage({ id }: { id: string }) {
   const router = useRouter()
   const { user, isAuthenticated } = useAuthStore()
   const [completedLessons, setCompletedLessons] = useState<number[]>([])
+  const { getCourseBySlug } = useCourseStore()
+  const [course, setCourse] = useState<Course | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  // Find course by slug (id prop is the slug)
-  const course = courses.find(c => c.slug === id) || courses[0] // Fallback for demo
+  useEffect(() => {
+    const loadCourse = async () => {
+      setLoading(true)
+      const data = await getCourseBySlug(id)
+      if (data) {
+        setCourse(data)
+      }
+      setLoading(false)
+    }
+    loadCourse()
+  }, [id, getCourseBySlug])
+
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>
+  }
+
+  if (!course) {
+    return <div className="flex justify-center items-center min-h-screen">Course not found</div>
+  }
 
   const isEnrolled = user?.enrolledCourses.includes(course.slug) || false
 

@@ -16,7 +16,6 @@ import {
   Play, Pause, SkipForward, SkipBack, Volume2, Maximize, Clock, CheckCircle, Circle, FileText, Download, Bookmark, ChevronLeft,
   Target, MessageSquare, ThumbsUp, ArrowRight, Lock
 } from "lucide-react";
-import { courses } from "@/utils/data/course";
 // import PlyrVideoComponent from "@/components/plyr-video";
 import dynamic from "next/dynamic";
 import { useProgressStore } from "@/store/quiz";
@@ -363,9 +362,13 @@ export default function LessonDetailPage() {
                           <div className="flex items-start gap-3">
                             <FileText className="w-5 h-5 text-blue-600 mt-1" />
                             <div className="flex-1">
-                              <h4 className="font-medium text-gray-900">{resource}</h4>
+                              <h4 className="font-medium text-gray-900">{typeof resource === 'string' ? resource : resource.title}</h4>
                               <p className="text-sm text-gray-600 mb-2">Practical resource for skill development</p>
-                              <Button size="sm" variant="outline">
+                              <Button size="sm" variant="outline" onClick={() => {
+                                if (typeof resource !== 'string' && resource.url) {
+                                  window.open(resource.url, '_blank');
+                                }
+                              }}>
                                 <Download className="w-3 h-3 mr-2" />
                                 Access Resource
                               </Button>

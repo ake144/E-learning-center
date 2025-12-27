@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/auth-store"
-import { courses } from "@/utils/data/course"
+import { Course } from "@/utils/data/course"
+import { useCourseStore } from "@/store/course-store"
 import { PaymentTabs } from "@/components/checkout/payment-tabs"
 import { StripeForm } from "@/components/checkout/stripe-form"
 import { ChapaButton } from "@/components/checkout/chapa-button"
@@ -18,8 +19,21 @@ export default function CheckoutPage({ params }: { params: { slug: string } }) {
     const router = useRouter()
     const { user, isAuthenticated } = useAuthStore()
     const [activeTab, setActiveTab] = useState<'stripe' | 'chapa'>('stripe')
+    const { getCourseBySlug } = useCourseStore()
+    const [course, setCourse] = useState<Course | null>(null)
+    const [loading, setLoading] = useState(true)
 
-    const course = courses.find(c => c.slug === params.slug)
+    useEffect(() => {
+        const loadCourse = async () => {
+            setLoading(true)
+            const data = await getCourseBySlug(params.slug)
+            if (data) {
+                setCourse(data)
+            }
+            setLoading(false)
+        }
+        loadCourse()
+    }, [params.slug, getCourseBySlug])
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -28,6 +42,10 @@ export default function CheckoutPage({ params }: { params: { slug: string } }) {
             router.push("/auth/login")
         }
     }, [isAuthenticated, params.slug, router])
+
+    if (loading) {
+        return <div className="p-8 text-center">Loading...</div>
+    }
 
     if (!course) {
         return <div className="p-8 text-center">Course not found</div>

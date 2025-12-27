@@ -1,11 +1,18 @@
+export interface Resource {
+  id: number;
+  title: string;
+  url: string;
+}
+
 export interface Lesson {
   id: number;
   title: string;
   duration: string;
   overview: string;
   transcript: string;
-  resources: string[];
+  resources: string[] | Resource[];
   quiz?: Quiz[] | undefined;
+  questions?: Quiz[] | undefined;
   hasQuiz?: boolean;
   quizAnswers?: Record<string, string>; // question -> answer
   quizScore?: number; // 0-100

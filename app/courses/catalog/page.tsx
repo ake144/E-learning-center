@@ -26,9 +26,16 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { Navigation } from "@/components/navigation"
-import { courses } from "@/utils/data/course"
+import { useCourseStore } from "@/store/course-store"
+import { useEffect } from "react"
 
 export default function CoursesCatalogPage() {
+  const { courses, fetchCourses } = useCourseStore()
+  
+  useEffect(() => {
+    fetchCourses()
+  }, [fetchCourses])
+
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedLevel, setSelectedLevel] = useState("all")

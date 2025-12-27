@@ -7,19 +7,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Circle, Clock, ChevronLeft } from "lucide-react";
-import { courses } from "@/utils/data/course";
-import {use} from 'react';
+import {use, useEffect} from 'react';
 import { useProgressStore } from "@/store/quiz";
 
 export default function CourseModulesPage() {
   const router = useRouter();
   const params = useParams();
   const { courseSlug } = params;
+  const { courses, fetchCourses } = useProgressStore();
+
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
   
   // const course = courses.find((c) => c.slug === courseSlug);
-  const course = useProgressStore((state) => state.courses.find((c) => c.slug === courseSlug));
-  if (!course) return notFound();
+  const course = courses.find((c) => c.slug === courseSlug);
+  if (!course) return <div>Loading...</div>; // Or notFound() if we are sure it's loaded
 
   return (
     <div className="min-h-screen bg-background">

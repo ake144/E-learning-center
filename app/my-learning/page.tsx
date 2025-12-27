@@ -32,12 +32,12 @@ import {
   X,
   RotateCw,
 } from "lucide-react"
-import { courses } from "@/utils/data/course"
 import { LearningProgress } from "@/components/my-learning/progress"
 import { useAuthStore } from "@/store/auth-store"
 import { useProgressCourseStore } from "@/store/progress-store"
 import { useNotesStore, Note } from "@/store/notes-store"
 import { useFlashcardsStore, Deck } from "@/store/flashcards-store"
+import { useProgressStore } from "@/store/quiz"
 import Link from "next/link"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
@@ -48,6 +48,11 @@ export default function MyLearningPage() {
   const { getCourseProgress } = useProgressCourseStore()
   const { notes, addNote, updateNote, deleteNote, toggleNoteStar } = useNotesStore()
   const { decks, createDeck, deleteDeck, addCard, deleteCard } = useFlashcardsStore()
+  const { courses, fetchCourses } = useProgressStore()
+
+  useEffect(() => {
+    fetchCourses()
+  }, [fetchCourses])
 
   const [mounted, setMounted] = useState(false)
 

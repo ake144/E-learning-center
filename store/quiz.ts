@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Course, courses } from '@/utils/data/course'; // Your static data
+import { Course } from '@/utils/data/course';
+import api from '@/lib/api';
 
-
-// const cloneCourse = (course) => JSON.parse(JSON.stringify(course));
 type ProgressState = {
   courses: Course[];
+  fetchCourses: () => Promise<void>;
   updateVideoProgress: (courseSlug: string, lessonId: number, progress: number) => void;
   submitQuiz: (courseSlug: string, lessonId: number, answers: Record<string, string>) => void;
 };
@@ -13,25 +13,53 @@ type ProgressState = {
 export const useProgressStore = create<ProgressState>()(
   persist(
     (set, get) => ({
-      // Initial state: Load courses, default progress
-      courses: courses.map(course => ({
-        ...course,
-        progress: 0, // Overall %
-        modules: course.modules.map(module => ({
-          ...module,
-          progress: 0, 
-          lessons: module.lessons.map(lesson => ({
-            ...lesson,
-            completed: false,
-            videoProgress: 0, // 0-100
-            hasQuiz: Array.isArray(lesson?.quiz) && lesson.quiz.length > 0, // Assume quiz is array in data
-            quiz: lesson?.quiz || [],
-            quizAnswers: {},
-            quizScore: 0,
-            quizCompleted: false,
-          })),
-        })),
-      })),
+      courses: [],
+
+      fetchCourses: async () => {
+        try {
+          const response = await api.get('/courses');
+          const fetchedCourses: Course[] = response.data;
+          
+          // Merge with existing progress if needed, or just overwrite if we trust the backend to have progress
+          // For now, let's assume we want to keep local progress but update course structure
+          // This is complex. Let's just load them and initialize progress if missing.
+          
+          set((state) => {
+            const mergedCourses = fetchedCourses.map(fetchedCourse => {
+              const existingCourse = state.courses.find(c => c.slug === fetchedCourse.slug);
+              if (existingCourse) {
+                // Keep existing progress
+                return existingCourse; 
+                // Note: This doesn't handle course updates (new lessons). 
+                // Ideally we should merge lesson by lesson.
+              }
+              
+              // Initialize new course
+              return {
+                ...fetchedCourse,
+                progress: 0,
+                modules: fetchedCourse.modules.map(module => ({
+                  ...module,
+                  progress: 0,
+                  lessons: module.lessons.map((lesson: any) => ({
+                    ...lesson,
+                    completed: false,
+                    videoProgress: 0,
+                    hasQuiz: (Array.isArray(lesson?.quiz) && lesson.quiz.length > 0) || (Array.isArray(lesson?.questions) && lesson.questions.length > 0),
+                    quiz: lesson?.quiz || lesson?.questions || [],
+                    quizAnswers: {},
+                    quizScore: 0,
+                    quizCompleted: false,
+                  })),
+                })),
+              };
+            });
+            return { courses: mergedCourses };
+          });
+        } catch (error) {
+          console.error("Failed to fetch courses", error);
+        }
+      },
       
       // Action: Update video progress (call from Plyr callback)
       updateVideoProgress: (courseSlug: string, lessonId: number, progress: number) => 

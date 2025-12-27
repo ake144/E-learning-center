@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import api from '@/lib/api';
 
 export interface User {
   id: string;
@@ -17,9 +18,12 @@ interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  error: string | null;
   pendingEmail: string | null; // Email waiting for OTP verification
   
   // Actions
+  login: (email: string, password: string) => Promise<void>;
+  register: (data: any) => Promise<void>;
   setUser: (user: User, token: string) => void;
   updateUser: (updates: Partial<User>) => void;
   setLoading: (loading: boolean) => void;
@@ -36,7 +40,48 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
       isLoading: false,
+      error: null,
       pendingEmail: null,
+
+      login: async (email, password) => {
+        set({ isLoading: true, error: null });
+        try {
+          const response = await api.post('/auth/login', { email, password });
+          const { user, access_token } = response.data;
+          set({
+            user,
+            token: access_token,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.response?.data?.message || 'Login failed',
+          });
+          throw error;
+        }
+      },
+
+      register: async (data) => {
+        set({ isLoading: true, error: null });
+        try {
+          const response = await api.post('/auth/register', data);
+          const { user, access_token } = response.data;
+          set({
+            user,
+            token: access_token,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.response?.data?.message || 'Registration failed',
+          });
+          throw error;
+        }
+      },
 
       setUser: (user: User, token: string) => {
         set({

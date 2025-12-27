@@ -13,7 +13,7 @@ import { toast } from "sonner"
 
 export default function SignupPage() {
     const router = useRouter()
-    const { setUser, setPendingEmail, setLoading, isLoading } = useAuthStore()
+    const { register, isLoading } = useAuthStore()
 
     const [formData, setFormData] = useState({
         name: "",
@@ -69,52 +69,22 @@ export default function SignupPage() {
 
         if (!validateForm()) return
 
-        setLoading(true)
         setErrors({})
 
         try {
-            const response = await fetch("/api/auth/signup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    phone: formData.phone,
-                    password: formData.password,
-                }),
+            await register({
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                password: formData.password,
             })
 
-            const data = await response.json()
-
-            if (!response.ok) {
-                setErrors({ submit: data.error || "Signup failed" })
-                return
-            }
-
-            // Store pending email for OTP verification
-            setPendingEmail(formData.email)
-
-            // Store user and token (unverified state)
-            setUser(data.user, data.token)
-
-            // For demo: show OTP in alert (remove in production)
-            if (data._demo_otp) {
-                toast("Account created successfully", {
-                    description: `Demo Mode: Your OTP is ${data._demo_otp}`,
-                    action: {
-                        label: "Copy OTP",
-                        onClick: () => navigator.clipboard.writeText(data._demo_otp),
-                    },
-                })
-            }
-
-            // Redirect to verification page
-            router.push("/auth/verify")
-        } catch (error) {
-            console.error("Signup error:", error)
-            setErrors({ submit: "Something went wrong. Please try again." })
-        } finally {
-            setLoading(false)
+            toast.success("Account created successfully!")
+            router.push("/")
+        } catch (err: any) {
+            console.error("Signup error:", err)
+            setErrors({ submit: err.message || "Signup failed" })
+            toast.error(err.message || "Signup failed")
         }
     }
 

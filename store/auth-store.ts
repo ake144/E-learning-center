@@ -48,8 +48,12 @@ export const useAuthStore = create<AuthState>()(
         try {
           const response = await api.post('/auth/login', { email, password });
           const { user, access_token } = response.data;
+          const mappedUser = {
+            ...user,
+            enrolledCourses: user.enrollments?.map((e: any) => e.course.slug) || [],
+          };
           set({
-            user,
+            user: mappedUser,
             token: access_token,
             isAuthenticated: true,
             isLoading: false,
@@ -68,8 +72,12 @@ export const useAuthStore = create<AuthState>()(
         try {
           const response = await api.post('/auth/register', data);
           const { user, access_token } = response.data;
+          const mappedUser = {
+            ...user,
+            enrolledCourses: user.enrollments?.map((e: any) => e.course.slug) || [],
+          };
           set({
-            user,
+            user: mappedUser,
             token: access_token,
             isAuthenticated: true,
             isLoading: false,

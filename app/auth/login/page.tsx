@@ -12,7 +12,7 @@ import { useAuthStore } from "@/store/auth-store"
 
 export default function LoginPage() {
     const router = useRouter()
-    const { setUser, setPendingEmail, setLoading, isLoading } = useAuthStore()
+    const { login, isLoading } = useAuthStore()
 
     const [formData, setFormData] = useState({
         email: "",
@@ -44,40 +44,14 @@ export default function LoginPage() {
 
         if (!validateForm()) return
 
-        setLoading(true)
         setErrors({})
 
         try {
-            const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            })
-
-            const data = await response.json()
-
-            if (!response.ok) {
-                // Check if user needs verification
-                if (data.needsVerification) {
-                    setPendingEmail(data.email)
-                    router.push("/auth/verify")
-                    return
-                }
-
-                setErrors({ submit: data.error || "Login failed" })
-                return
-            }
-
-            // Store user and token
-            setUser(data.user, data.token)
-
-            // Redirect to dashboard
+            await login(formData.email, formData.password)
             router.push("/")
-        } catch (error) {
-            console.error("Login error:", error)
-            setErrors({ submit: "Something went wrong. Please try again." })
-        } finally {
-            setLoading(false)
+        } catch (err: any) {
+            console.error("Login error:", err)
+            setErrors({ submit: err.message || "Login failed" })
         }
     }
 

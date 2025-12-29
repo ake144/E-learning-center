@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/auth-store"
 import { Course } from "@/utils/data/course"
 import { useCourseStore } from "@/store/course-store"
@@ -15,7 +15,8 @@ import { loadStripe } from "@stripe/stripe-js"
 // Initialize Stripe (replace with your publishable key)
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_placeholder")
 
-export default function CheckoutPage({ params }: { params: { slug: string } }) {
+export default function CheckoutPage( ) {
+    const params =  useParams();
     const router = useRouter()
     const { user, isAuthenticated } = useAuthStore()
     const [activeTab, setActiveTab] = useState<'stripe' | 'chapa'>('stripe')
@@ -23,10 +24,13 @@ export default function CheckoutPage({ params }: { params: { slug: string } }) {
     const [course, setCourse] = useState<Course | null>(null)
     const [loading, setLoading] = useState(true)
 
+    const slug = params.slug;
+
+
     useEffect(() => {
         const loadCourse = async () => {
             setLoading(true)
-            const data = await getCourseBySlug(params.slug)
+            const data = await getCourseBySlug(slug as string)
             if (data) {
                 setCourse(data)
             }

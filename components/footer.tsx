@@ -208,15 +208,7 @@ export function Footer() {
                   </div>
                 </div>
               </Link>
-              <div className="mt-6">
-                <div className="bg-white border-2 border-gray-900 rounded-full w-20 h-20 flex items-center justify-center mx-auto">
-                  <div className="text-center">
-                    <div className="text-xs font-semibold">Certified</div>
-                    <div className="text-2xl font-bold">B</div>
-                    <div className="text-xs">Corporation</div>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

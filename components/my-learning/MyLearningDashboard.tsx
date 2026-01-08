@@ -6,6 +6,7 @@ import { useProgressCourseStore } from "@/store/progress-store"
 import { useNotesStore } from "@/store/notes-store"
 import { useFlashcardsStore } from "@/store/flashcards-store"
 import { useProgressStore } from "@/store/quiz"
+import { useBooksStore } from "@/store/books-store"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -33,12 +34,14 @@ export default function MyLearningDashboard() {
   const { notes } = useNotesStore()
   const { decks } = useFlashcardsStore()
   const { courses, fetchCourses } = useProgressStore()
+  const { purchasedBooks, fetchPurchasedBooks } = useBooksStore()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     fetchCourses()
+    fetchPurchasedBooks()
     setMounted(true)
-  }, [fetchCourses])
+  }, [fetchCourses, fetchPurchasedBooks])
 
   if (!mounted) return null
 
@@ -275,8 +278,9 @@ export default function MyLearningDashboard() {
 
           {/* Books Tab */}
           <TabsContent value="books">
+            {purchasedBooks.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {books.map((book) => (
+              {purchasedBooks.map((book) => (
                 <div key={book.id} className="group cursor-pointer">
                   <div className="aspect-[2/3] bg-gray-200 rounded-lg overflow-hidden mb-3 shadow-md group-hover:shadow-xl transition-all relative">
                     <img src={book.cover} alt={book.title} className="w-full h-full object-cover" />
@@ -292,6 +296,16 @@ export default function MyLearningDashboard() {
                 </div>
               ))}
             </div>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
+                <Library className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No books purchased yet</h3>
+                <p className="text-gray-500 mb-6">Explore our library to find books to read.</p>
+                <Link href="/library">
+                  <Button>Browse Library</Button>
+                </Link>
+              </div>
+            )}
           </TabsContent>
 
           {/* Exams Tab */}

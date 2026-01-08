@@ -136,13 +136,13 @@ export default function CourseDetailPage({ id }: { id: string }) {
             </div>
 
             {/* Course Content Tabs */}
-            <Tabs defaultValue="syllabus" className="w-full">
+            <Tabs defaultValue="overview" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-gray-100">
+               <TabsTrigger value="overview" className="data-[state=active]:bg-white">
+                  Overview
+                </TabsTrigger>
                 <TabsTrigger value="syllabus" className="data-[state=active]:bg-white">
                   Syllabus
-                </TabsTrigger>
-                <TabsTrigger value="overview" className="data-[state=active]:bg-white">
-                  Overview
                 </TabsTrigger>
                 <TabsTrigger value="instructor" className="data-[state=active]:bg-white">
                   Instructor

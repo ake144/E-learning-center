@@ -61,7 +61,7 @@ export default function Hero() {
                     <div className="flex-1 relative w-full max-w-2xl">
                         <div className="relative z-10 animate-in fade-in slide-in-from-right-10 duration-1000">
                             <Image
-                                src="/hero-image.png"
+                                src="/e-learn.png"
                                 alt="Ethiopia's Premier Talent Management Platform"
                                 width={800}
                                 height={600}

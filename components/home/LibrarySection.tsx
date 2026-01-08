@@ -49,6 +49,7 @@ export default function LibrarySection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {books.map((book, index) => (
+                        <Link key={index} href={`/library/${book.title.replace(/\s+/g, '-').toLowerCase()}`}>
                         <Card key={index} className="h-full border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group rounded-[2rem] bg-white">
                             <div className="aspect-[3/4] bg-gray-100 relative overflow-hidden">
                                 <img
@@ -76,6 +77,7 @@ export default function LibrarySection() {
                                 </div>
                             </CardContent>
                         </Card>
+                    </Link>
                     ))}
                 </div>
             </div>

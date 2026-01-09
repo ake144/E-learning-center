@@ -8,22 +8,27 @@ import Link from "next/link"
 export default function LibrarySection() {
     const books = [
         {
-            title: "African History: A New Perspective",
-            author: "Dr. Kwame Nkrumah",
-            image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop",
-            category: "History",
+            id: "1",
+            title: "Introduction to Algorithms",
+             author: "Thomas H. Cormen",
+            category: "Computer Science",
+            image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+
         },
         {
-            title: "Modern Economics in Africa",
-            author: "Prof. Ngozi Okonjo-Iweala",
-            image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=800&auto=format&fit=crop",
-            category: "Economics",
-        },
+             id: "2",
+            title: "Python for Data Analysis",
+            author: "Wes McKinney",
+            category: "Data Science",
+            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+
+                   },
         {
-            title: "The Future of Tech in Africa",
-            author: "Elon Musk (Inspired)",
-            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
-            category: "Technology",
+            id: "3",
+            title: "Deep Learning",
+            author: "Ian Goodfellow",
+            category: "Computer Science",
+            image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
         },
     ]
 
@@ -41,7 +46,7 @@ export default function LibrarySection() {
                         </p>
                     </div>
                     <Link href="/library">
-                        <Button variant="outline" className="h-14 px-8 border-2 font-bold text-lg rounded-xl hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all group">
+                        <Button variant="outline" className="h-14 px-8 border-2 font-bold text-lg rounded-xl hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all group cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1">
                             Explore Library <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </Link>
@@ -49,7 +54,7 @@ export default function LibrarySection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {books.map((book, index) => (
-                        <Link key={index} href={`/library/${book.title.replace(/\s+/g, '-').toLowerCase()}`}>
+                        <Link key={index} href={`/library/${book.id}`}>
                         <Card key={index} className="h-full border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden group rounded-[2rem] bg-white">
                             <div className="aspect-[3/4] bg-gray-100 relative overflow-hidden">
                                 <img
@@ -58,7 +63,7 @@ export default function LibrarySection() {
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 rounded-xl flex items-center justify-center gap-2">
+                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300">
                                         <Download className="w-5 h-5" />
                                         Download PDF
                                     </Button>

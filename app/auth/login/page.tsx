@@ -48,7 +48,7 @@ export default function LoginPage() {
 
         try {
             await login(formData.email, formData.password)
-            router.push("/")
+            router.push("/my-learning")
         } catch (err: any) {
             console.error("Login error:", err)
             setErrors({ submit: err.message || "Login failed" })

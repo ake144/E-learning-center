@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import api from '@/lib/api';
+import Cookies from 'js-cookie';
 
 export interface User {
   id: string;
@@ -52,6 +53,7 @@ export const useAuthStore = create<AuthState>()(
             ...user,
             enrolledCourses: user.enrollments?.map((e: any) => e.course.slug) || [],
           };
+          Cookies.set('token', access_token, { path: '/', sameSite: 'lax' });
           set({
             user: mappedUser,
             token: access_token,
@@ -76,6 +78,7 @@ export const useAuthStore = create<AuthState>()(
             ...user,
             enrolledCourses: user.enrollments?.map((e: any) => e.course.slug) || [],
           };
+          Cookies.set('token', access_token, { path: '/', sameSite: 'lax' }); // Set cookie for middleware
           set({
             user: mappedUser,
             token: access_token,
@@ -135,6 +138,7 @@ export const useAuthStore = create<AuthState>()(
       },
 
       signOut: () => {
+        Cookies.remove('token'); // Remove cookie
         set({
           user: null,
           token: null,

@@ -5,14 +5,16 @@ import { CreditCard, Wallet } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface PaymentTabsProps {
-    activeTab: 'stripe' | 'chapa'
-    onTabChange: (tab: 'stripe' | 'chapa') => void
+    // activeTab: 'stripe' | 'chapa'
+    // onTabChange: (tab: 'stripe' | 'chapa') => void
+      activeTab: 'chapa'
+    onTabChange: (tab:  'chapa') => void
 }
 
 export function PaymentTabs({ activeTab, onTabChange }: PaymentTabsProps) {
     return (
         <div className="grid grid-cols-2 gap-4 mb-6">
-            <button
+            {/* <button
                 onClick={() => onTabChange('stripe')}
                 className={cn(
                     "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all",
@@ -24,7 +26,7 @@ export function PaymentTabs({ activeTab, onTabChange }: PaymentTabsProps) {
                 <CreditCard className="w-6 h-6 mb-2" />
                 <span className="font-medium">Credit Card(Stripe)</span>
                 <span className="text-xs text-gray-500 mt-1">International</span>
-            </button>
+            </button> */}
 
             <button
                 onClick={() => onTabChange('chapa')}

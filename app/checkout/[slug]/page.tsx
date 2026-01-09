@@ -19,7 +19,7 @@ export default function CheckoutPage( ) {
     const params =  useParams();
     const router = useRouter()
     const { user, isAuthenticated } = useAuthStore()
-    const [activeTab, setActiveTab] = useState<'stripe' | 'chapa'>('stripe')
+    const [activeTab, setActiveTab] = useState<'chapa' >('chapa')
     const { getCourseBySlug } = useCourseStore()
     const [course, setCourse] = useState<Course | null>(null)
     const [loading, setLoading] = useState(true)
@@ -83,7 +83,7 @@ export default function CheckoutPage( ) {
                             <PaymentTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
                             <div className="mt-6">
-                                {activeTab === 'stripe' ? (
+                                {/* {activeTab === 'stripe' ? (
                                     <Elements stripe={stripePromise}>
                                         <StripeForm
                                             amount={course.price}
@@ -101,7 +101,18 @@ export default function CheckoutPage( ) {
                                         phone_number={user.phone || ''}
                                         courseSlug={course.slug}
                                     />
-                                )}
+                                )} */}
+                                
+                                    <ChapaButton
+                                        amount={course.priceETB || course.price * 50} // Fallback conversion
+                                        email={user.email}
+                                        firstName={user.name.split(' ')[0]}
+                                        lastName={user.name.split(' ')[1] || ''}
+                                        txRef={txRef}
+                                        phone_number={user.phone || ''}
+                                        courseSlug={course.slug}
+                                    />
+                                
                             </div>
                         </div>
                     </div>
@@ -111,9 +122,9 @@ export default function CheckoutPage( ) {
                         <OrderSummary
                             courseTitle={course.title}
                             courseImage={course.image || ""}
-                            price={activeTab === 'stripe' ? course.price : (course.priceETB || 0)}
-                            originalPrice={activeTab === 'stripe' ? course.originalPrice : ((course.originalPrice || 0) * 50)} // Approx conversion
-                            currency={activeTab === 'stripe' ? 'USD' : 'ETB'}
+                            price={course.priceETB || 0}
+                            originalPrice={(course.originalPrice || 0) * 50} // Approx conversion
+                            currency={'ETB'}
                         />
                     </div>
                 </div>

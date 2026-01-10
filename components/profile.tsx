@@ -73,12 +73,12 @@ export default function ProfileComponent() {
 
     return (
         <div className="min-h-screen bg-gray-50/50 pb-12">
-            {/* Header / Hero Section */}
+
             <div className="h-48 md:h-64 bg-gradient-to-r from-blue-600 to-indigo-600 relative">
                 <div className="absolute inset-0 bg-black/10" />
                 <div className="container mx-auto px-4 h-full relative z-10 flex items-end pb-8 md:pb-0 translate-y-[50%] md:translate-y-[40%]">
                     <div className="flex flex-col md:flex-row items-center md:items-end gap-6 w-full">
-                        {/* Avatar */}
+             
                         <div className="relative group">
                             <Avatar className="w-32 h-32 md:w-40 md:h-40 border-4 border-white shadow-xl">
                                 <AvatarImage src={user.avatar} alt={user.name} className="object-cover" />
@@ -91,7 +91,6 @@ export default function ProfileComponent() {
                             </button>
                         </div>
 
-                        {/* Name & Role */}
                         <div className="flex-1 text-center md:text-left mb-2">
                             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 md:text-white py-1">{user.name}</h1>
                             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mt-1 md:text-blue-100">
@@ -105,7 +104,7 @@ export default function ProfileComponent() {
                             </div>
                         </div>
 
-                        {/* Actions */}
+          
                         <div className="flex items-center gap-3 mt-4 md:mt-0 mb-4 ">
                             <Button variant="outline" className="bg-white/10 hover:bg-white/20 border-white/20 text-black md:text-white backdrop-blur-sm" onClick={() => setIsEditing(!isEditing)}>
                                 <Settings className="w-4 h-4 mr-2" />

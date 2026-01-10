@@ -49,6 +49,9 @@ export interface Course {
   originalPrice?: number;
   currency: 'USD' | 'ETB';
   priceETB?: number; // Price in Ethiopian Birr for Chapa
+  level?: string;
+  duration?: string;
+  lessons?: number;
 }
 
 export const courses: Course[] = [
@@ -59,6 +62,9 @@ export const courses: Course[] = [
     image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Replaced with a relevant scholarship/study image
     progress: 0,
     price: 30,
+    level: "All Levels",
+    duration: "10h 30m",
+    lessons: 24,
     currency: 'USD',
     priceETB: 3500, // Approx conversion, can be adjusted
     modules: [

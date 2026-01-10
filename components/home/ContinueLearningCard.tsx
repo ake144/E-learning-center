@@ -39,7 +39,7 @@ export default function ContinueLearningCard({ course }: ContinueLearningCardPro
             <span className="font-medium text-gray-700">Progress</span>
             <span className="font-bold text-gray-900">{course.progress}%</span>
           </div>
-          <Progress value={course.progress} className="h-2 bg-gray-100" indicatorClassName="bg-green-500" />
+<Progress value={course.progress} className="h-2 bg-gray-100 [&>div]:bg-green-500" />
         </div>
 
         <div className="mt-6">

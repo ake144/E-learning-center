@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
       }
      ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:3000/:path*', // Internal docker address
+      },
+    ];
+  },
 };
 
 export default nextConfig;

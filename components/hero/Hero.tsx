@@ -30,12 +30,12 @@ export default function Hero() {
                                     Get Started
                                 </Button>
                             </Link>
-                            <Link href="/faq">
+                            {/* <Link href="/faq">
                                 <Button variant="outline" className="h-14 px-8 text-lg font-semibold rounded-xl border-2 hover:bg-gray-50 transition-all flex items-center gap-2">
                                     <MessageSquareText className="w-5 h-5 text-blue-600" />
                                     Ask AI
                                 </Button>
-                            </Link>
+                            </Link> */}
                         </div>
 
                         {/* Stats or Trust Badge */}

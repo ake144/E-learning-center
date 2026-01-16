@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
             first_name,
             last_name,
             tx_ref,
-            callback_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/chapa/callback`,
-            return_url: redirect_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/success?slug=${slug}`,
+            callback_url: `https://globalpathway.esperanza.et/api/payment/chapa/callback`,
+            return_url: redirect_url || `https://globalpathway.esperanza.et/checkout/success?slug=${slug}`,
             customization: {
                 title: 'Enrollment',
                 description: 'Payment for course access',

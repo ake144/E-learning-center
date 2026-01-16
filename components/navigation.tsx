@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -8,11 +8,31 @@ import { Input } from "@/components/ui/input"
 import { BookOpen, Search, Menu, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { UserMenu } from "@/components/navigation/user-menu"
+import debounce from 'debounce';
+import { useSearchCourses } from "@/utils/data/useSearchCourses"
+import { Course } from "@/utils/data/course"
 
 export function Navigation() {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [debouncedTerm, setDebouncedTerm] = useState("")
+  const [showResults, setShowResults] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+
+  const { data: results = [], isLoading } = useSearchCourses(debouncedTerm)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce((value: string) => setDebouncedTerm(value), 300),
+    []
+  )
+
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setSearchTerm(value)
+    setShowResults(true)
+    debouncedSearch(value)
+  }
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -61,10 +81,35 @@ export function Navigation() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="What do you want to learn?"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchTerm}
+                onChange={onSearchChange}
+                onFocus={() => setShowResults(true)}
+                onBlur={() => setTimeout(() => setShowResults(false), 200)}
                 className="pl-10 w-80 border-gray-300"
               />
+              {showResults && searchTerm && (
+                <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg border border-t-0 p-2 max-h-96 overflow-y-auto z-50">
+                  {isLoading ? (
+                    <div className="p-2 text-center text-sm text-gray-500">Loading...</div>
+                  ) : results.length > 0 ? (
+                    results.map((course) => (
+                      <Link
+                        href={`/courses/${course.slug}`}
+                        key={course.slug}
+                        className="block p-2 hover:bg-gray-100 rounded"
+                        onClick={() => setShowResults(false)}
+                      >
+                        <div className="font-medium text-sm text-gray-900">{course.title}</div>
+                        {course.description && (
+                          <div className="text-xs text-gray-500 truncate">{course.description}</div>
+                        )}
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="p-2 text-center text-sm text-gray-500">No courses found</div>
+                  )}
+                </div>
+              )}
             </div>
 
             <Button
@@ -105,8 +150,8 @@ export function Navigation() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="What do you want to learn?"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={searchTerm}
+                  onChange={onSearchChange}
                   className="pl-10 w-full border-gray-300"
                 />
               </div>

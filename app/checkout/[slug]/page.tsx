@@ -78,9 +78,9 @@ export default function CheckoutPage( ) {
                     {/* Left Column: Payment Methods */}
                     <div className="lg:col-span-2 space-y-6">
                         <div className="bg-white rounded-2xl shadow-sm p-6">
-                            <h2 className="text-xl font-semibold mb-6">Select Payment Method</h2>
+                            {/* <h2 className="text-xl font-semibold mb-6">Select Payment Method</h2> */}
 
-                            <PaymentTabs activeTab={activeTab} onTabChange={setActiveTab} />
+                            {/* <PaymentTabs activeTab={activeTab} onTabChange={setActiveTab} /> */}
 
                             <div className="mt-6">
                                 {/* {activeTab === 'stripe' ? (

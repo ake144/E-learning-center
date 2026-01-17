@@ -2,13 +2,14 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Currency } from "lucide-react"
 import { toast } from "sonner"
 
 interface ChapaButtonProps {
     amount: number
     email: string
     firstName: string
+    currency?: string
     lastName: string
     txRef: string
     phone_number?: string
@@ -22,13 +23,14 @@ export function ChapaButton({ amount, email, firstName, lastName, phone_number, 
     const handlePayment = async () => {
         setIsLoading(true)
         try {
-            const response = await fetch("/api/payment/chapa/initialize", {
+            const response = await fetch("/api/payments/chapa", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     amount,
                     email,
                     first_name: firstName,
+                    currency: "ETB",
                     last_name: lastName,
                     tx_ref: txRef,
                     phone_number,

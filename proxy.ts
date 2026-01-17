@@ -10,7 +10,7 @@ export function proxy(request: NextRequest) {
   const isProtectedRoute = protectedRoutes.some(path => request.nextUrl.pathname.startsWith(path))
 
   // 3. Define auth routes (login/signup) - redirect away if already logged in
-  const authRoutes = ['/auth/login', '/auth/signup', '/auth/forgot-password']
+  const authRoutes = ['/auth/login', '/auth/signup', '/auth/forgot-password', '/auth/reset-password']
   const isAuthRoute = authRoutes.some(path => request.nextUrl.pathname.startsWith(path))
 
   // Scenario A: User is NOT logged in but tries to access protected route

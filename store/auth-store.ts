@@ -32,6 +32,8 @@ interface AuthState {
   enrollCourse: (courseSlug: string) => void;
   isEnrolled: (courseSlug: string) => boolean;
   signOut: () => void;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (token: string, newPassword: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -89,6 +91,34 @@ export const useAuthStore = create<AuthState>()(
           set({
             isLoading: false,
             error: error.response?.data?.message || 'Registration failed',
+          });
+          throw error;
+        }
+      },
+
+      forgotPassword: async (email) => {
+        set({ isLoading: true, error: null });
+        try {
+          await api.post('/auth/forgot-password', { email });
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.response?.data?.message || 'Failed to send reset email',
+          });
+          throw error;
+        }
+      },
+
+      resetPassword: async (token, newPassword) => {
+        set({ isLoading: true, error: null });
+        try {
+          await api.post('/auth/reset-password', { token, newPassword });
+          set({ isLoading: false });
+        } catch (error: any) {
+          set({
+            isLoading: false,
+            error: error.response?.data?.message || 'Failed to reset password',
           });
           throw error;
         }
